@@ -6,6 +6,8 @@ or script, same convention as `ai-trading-agent`'s pure decision-logic modules.
 
 from collections.abc import Sequence
 
+OUTCOMES = ("H", "D", "A")
+
 
 def implied_probabilities(decimal_odds: Sequence[float]) -> list[float]:
     return [1.0 / odds for odds in decimal_odds]
