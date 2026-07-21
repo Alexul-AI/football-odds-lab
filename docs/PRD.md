@@ -252,9 +252,14 @@ mostly exhausted. See
 (added 2026-07-21, research/design only, no source picked yet) for the
 candidate evaluation. The audit plan for the first candidate (timestamped odds
 via The Odds API) is
-[`docs/PHASE2_SOURCE_SPIKE_PLAN.md`](PHASE2_SOURCE_SPIKE_PLAN.md) - plan only,
-no code, no API key obtained yet; blocked on the user obtaining/paying for
-access themselves before implementation starts.
+[`docs/PHASE2_SOURCE_SPIKE_PLAN.md`](PHASE2_SOURCE_SPIKE_PLAN.md). **Spike
+complete, result: ACCEPT** - Pinnacle confirmed in The Odds API's historical
+snapshots, 98.6% entity-match rate against the existing dataset, price
+agreement within 1.56 devigged-probability percentage points, reproducible on
+re-fetch. See the plan doc's "Result" section for the full numbers and the
+one real caveat (coverage figures depend on snapshot sampling density, not
+just source availability). Confirms the source is usable - does not mean
+Phase 2 itself is done; EV/vig/betting economics haven't been touched yet.
 
 Question:
 

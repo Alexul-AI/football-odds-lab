@@ -12,11 +12,16 @@ hard boundaries, legal notes), and
 [`docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md`](docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md)
 for exactly what each hypothesis test does and does not show, and
 [`docs/PHASE1_CONCLUSION.md`](docs/PHASE1_CONCLUSION.md) for where Phase 1 landed.
-Phase 2 planning (data source candidates, no source picked yet) is in
+Phase 2 planning (data source candidates) is in
 [`docs/PHASE2_DATA_SOURCE_SELECTION.md`](docs/PHASE2_DATA_SOURCE_SELECTION.md);
-the audit plan for the first candidate is
-[`docs/PHASE2_SOURCE_SPIKE_PLAN.md`](docs/PHASE2_SOURCE_SPIKE_PLAN.md) (plan
-only, no code yet).
+the first candidate (The Odds API) has been audited -
+[`docs/PHASE2_SOURCE_SPIKE_PLAN.md`](docs/PHASE2_SOURCE_SPIKE_PLAN.md)'s
+"Result" section has the verdict (**ACCEPT**) and real numbers.
+
+## Requires an API key for the Phase 2 spike script
+
+`scripts/run_phase2_source_spike.py` needs `THE_ODDS_API_KEY` in a local
+`.env` file (see `.env.example`) - never commit a real key.
 
 ## Status
 
