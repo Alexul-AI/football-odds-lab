@@ -12,6 +12,8 @@ hard boundaries, legal notes), and
 [`docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md`](docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md)
 for exactly what each hypothesis test does and does not show, and
 [`docs/PHASE1_CONCLUSION.md`](docs/PHASE1_CONCLUSION.md) for where Phase 1 landed.
+Phase 2 planning (data source candidates, no source picked yet) is in
+[`docs/PHASE2_DATA_SOURCE_SELECTION.md`](docs/PHASE2_DATA_SOURCE_SELECTION.md).
 
 ## Status
 
