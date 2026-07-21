@@ -5,17 +5,25 @@ value-betting? Analytics only - no live or paper betting is placed by any code i
 this repository.
 
 See [`CLAUDE.md`](CLAUDE.md) for full project context (goals, hard boundaries, legal
-notes) and [`docs/PHASE0_METHODOLOGY.md`](docs/PHASE0_METHODOLOGY.md) for exactly
-what the current hypothesis test does and does not show.
+notes), [`docs/PHASE0_METHODOLOGY.md`](docs/PHASE0_METHODOLOGY.md) and
+[`docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md`](docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md)
+for exactly what each hypothesis test does and does not show.
 
 ## Status
 
-**Phase 0, first pass complete.** The CLV (Closing Line Value) hypothesis test
-described in `docs/PHASE0_METHODOLOGY.md` has been run once on the full available
-history (2012-13 through 2025-26, top-5 European leagues, ~24k matches). Both
-non-overlapping time windows came back positive and statistically significant - see
-the report for the numbers and, more importantly, the limitations section before
-drawing any conclusions from that.
+**Phase 0 and 0.5, first pass complete.** Two hypotheses tested so far:
+
+- **Phase 0 (CLV)**: does Pinnacle's own opening-to-closing price movement predict
+  match outcomes profitably? Both non-overlapping time windows came back positive
+  and statistically significant - but the test needs the closing line to pick which
+  side to back at the opening price, so it isn't live-tradeable as-is.
+- **Phase 0.5 (cross-bookmaker value)**: direct follow-up removing that look-ahead -
+  compares Pinnacle's closing fair price against retail closing prices at the SAME
+  point in time. Came back null (no significant edge in either non-overlapping
+  window) once corrected for a selection-bias artifact in the naive version.
+
+See both methodology docs before drawing conclusions from either - the honest
+limitations matter as much as the headline numbers.
 
 ## Setup
 
@@ -33,17 +41,18 @@ pip install -e ".[dev]"
 pytest
 ```
 
-## Running the Phase 0 CLV hypothesis test
+## Running the hypothesis tests
 
 ```bash
 python scripts/run_phase0_clv_test.py
+python scripts/run_phase0b_value_betting_test.py
 ```
 
-Downloads and caches historical odds CSVs from
+Both download and cache historical odds CSVs from
 [football-data.co.uk](https://www.football-data.co.uk) under `data/raw/` (gitignored,
-re-downloadable), then writes a markdown report plus a full per-match CSV to
-`reports/` (also gitignored - local research output, same convention as
-`ai-trading-agent`'s `data/backtest-reports/`).
+re-downloadable), then write a markdown report plus per-match CSVs to `reports/`
+(also gitignored - local research output, same convention as `ai-trading-agent`'s
+`data/backtest-reports/`).
 
 ## Project layout
 
@@ -51,13 +60,17 @@ re-downloadable), then writes a markdown report plus a full per-match CSV to
 src/football_odds_lab/
   data_sources/       # football-data.co.uk downloader
   analysis/
-    odds_math.py      # pure: implied probability, overround, devig, CLV edge
-    clv_hypothesis.py # pure: bet-selection rule + statistical summary
+    odds_math.py                 # pure: implied probability, overround, devig, CLV edge
+    betting_stats.py             # pure: shared statistical summary (t-test, CI, ROI)
+    clv_hypothesis.py            # pure: Phase 0 bet-selection rule
+    value_betting_hypothesis.py  # pure: Phase 0.5 bet-selection rule
 scripts/
-  run_phase0_clv_test.py  # end-to-end: download -> test -> report
+  run_phase0_clv_test.py            # end-to-end: download -> Phase 0 test -> report
+  run_phase0b_value_betting_test.py # end-to-end: download -> Phase 0.5 test -> report
 tests/                # unit tests for the pure analysis modules
 docs/
-  PHASE0_METHODOLOGY.md  # what the test does, what it can't tell us, how to read it
+  PHASE0_METHODOLOGY.md              # Phase 0 (CLV): what it shows, what it can't
+  PHASE0B_VALUE_BETTING_METHODOLOGY.md  # Phase 0.5 (cross-bookmaker value): same
 ```
 
 ## Known gaps (transparent, not hidden)

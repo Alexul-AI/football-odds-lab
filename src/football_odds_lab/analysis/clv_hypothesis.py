@@ -23,10 +23,10 @@ signal that predicts the move before it happens.
 
 from dataclasses import dataclass
 
-import numpy as np
-from scipy import stats
-
+from football_odds_lab.analysis.betting_stats import HypothesisTestResult, summarize_bets
 from football_odds_lab.analysis.odds_math import clv_edge, devig_multiplicative
+
+__all__ = ["MatchBet", "select_bet_and_profit", "HypothesisTestResult", "summarize_bets"]
 
 OUTCOMES = ("H", "D", "A")
 
@@ -55,42 +55,3 @@ def select_bet_and_profit(
     profit = (open_odds[side] - 1.0) * stake if won else -stake
 
     return MatchBet(side=side, clv_edge=edges[side], odds_at_open=open_odds[side], won=won, profit=profit)
-
-
-@dataclass(frozen=True)
-class HypothesisTestResult:
-    n_bets: int
-    total_staked: float
-    total_profit: float
-    roi: float
-    win_rate: float
-    mean_profit_per_bet: float
-    t_statistic: float
-    p_value: float
-    ci_95_low: float
-    ci_95_high: float
-
-
-def summarize_bets(bets: list[MatchBet]) -> HypothesisTestResult:
-    profits = np.array([b.profit for b in bets], dtype=float)
-    n = len(profits)
-    total_staked = float(n)
-    total_profit = float(profits.sum())
-    mean_profit = float(profits.mean())
-
-    t_stat, p_value = stats.ttest_1samp(profits, popmean=0.0)
-    sem = stats.sem(profits)
-    ci_low, ci_high = stats.t.interval(0.95, df=n - 1, loc=mean_profit, scale=sem)
-
-    return HypothesisTestResult(
-        n_bets=n,
-        total_staked=total_staked,
-        total_profit=total_profit,
-        roi=total_profit / total_staked,
-        win_rate=float(np.mean([b.won for b in bets])),
-        mean_profit_per_bet=mean_profit,
-        t_statistic=float(t_stat),
-        p_value=float(p_value),
-        ci_95_low=float(ci_low),
-        ci_95_high=float(ci_high),
-    )

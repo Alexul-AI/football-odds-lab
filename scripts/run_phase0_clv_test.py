@@ -18,7 +18,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from football_odds_lab.analysis.clv_hypothesis import HypothesisTestResult, select_bet_and_profit, summarize_bets
+from football_odds_lab.analysis.betting_stats import HypothesisTestResult, summarize_bets
+from football_odds_lab.analysis.clv_hypothesis import select_bet_and_profit
 from football_odds_lab.analysis.odds_math import overround
 from football_odds_lab.data_sources.football_data_co_uk import EARLIEST_SEASON_START_YEAR, LEAGUES, download_all
 
@@ -57,7 +58,13 @@ def run_bets(df: pd.DataFrame) -> tuple[list, pd.DataFrame]:
     return bets, bets_df
 
 
-def format_result_line(label: str, result: HypothesisTestResult) -> str:
+def summarize_or_none(bets: list) -> HypothesisTestResult | None:
+    return summarize_bets(bets) if bets else None
+
+
+def format_result_line(label: str, result: HypothesisTestResult | None) -> str:
+    if result is None:
+        return f"| {label} | 0 | - | - | - | - | - | - |"
     significant = "yes" if result.p_value < 0.05 else "no"
     return (
         f"| {label} | {result.n_bets} | {result.roi:+.2%} | {result.win_rate:.1%} | "
@@ -77,15 +84,14 @@ def main() -> None:
     overall = summarize_bets(bets)
 
     window_a_mask = df["SeasonStartYear"] < WINDOW_SPLIT_YEAR
-    window_a = summarize_bets([b for b, keep in zip(bets, window_a_mask) if keep])
-    window_b = summarize_bets([b for b, keep in zip(bets, ~window_a_mask) if keep])
+    window_a = summarize_or_none([b for b, keep in zip(bets, window_a_mask) if keep])
+    window_b = summarize_or_none([b for b, keep in zip(bets, ~window_a_mask) if keep])
 
     per_league = {}
     for league_code in LEAGUES:
         league_mask = df["League"] == league_code
         league_bets = [b for b, keep in zip(bets, league_mask) if keep]
-        if league_bets:
-            per_league[league_code] = summarize_bets(league_bets)
+        per_league[league_code] = summarize_or_none(league_bets)
 
     avg_open_overround = df.apply(lambda r: overround([r.PSH, r.PSD, r.PSA]), axis=1).mean()
     avg_close_overround = df.apply(lambda r: overround([r.PSCH, r.PSCD, r.PSCA]), axis=1).mean()
