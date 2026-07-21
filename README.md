@@ -4,8 +4,10 @@ Phase 0 research: is there a real, statistically significant edge in football
 value-betting? Analytics only - no live or paper betting is placed by any code in
 this repository.
 
-See [`CLAUDE.md`](CLAUDE.md) for full project context (goals, hard boundaries, legal
-notes), [`docs/PHASE0_METHODOLOGY.md`](docs/PHASE0_METHODOLOGY.md) and
+See [`docs/PRD.md`](docs/PRD.md) for the product plan (stages, ethical boundaries,
+what's in/out of scope), [`CLAUDE.md`](CLAUDE.md) for full project context (goals,
+hard boundaries, legal notes), and
+[`docs/PHASE0_METHODOLOGY.md`](docs/PHASE0_METHODOLOGY.md) /
 [`docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md`](docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md)
 for exactly what each hypothesis test does and does not show.
 
