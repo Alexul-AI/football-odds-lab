@@ -18,10 +18,26 @@ already computes internally as `side`, used here as a prediction target instead 
 something looked up after the fact. Binary/one-vs-rest framings are a possible
 follow-up, not this PR.
 
-## 2. Features
+Computing this target requires `PSCH`/`PSCD`/`PSCA` (the closing line) - that's
+correct and unavoidable, it's literally what's being predicted. See the hard line
+in §2 immediately below: needed for the label, forbidden from the feature matrix.
+
+## 2. Features - close odds are never a feature, full stop
 
 Only what PR #6 already built (`line_movement_features.FEATURE_COLUMNS`) - no
-additions. Before fitting anything, this PR must resolve the two open items from
+additions, and that module already excludes `PSCH`/`PSCD`/`PSCA` by construction
+(see `docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md`'s "Explicitly forbidden
+Phase 1 features" section). Restated explicitly here because this is the PR where
+target and features get assembled side by side for the first time, which is
+exactly where a copy-paste or a wide-join could accidentally let a close-odds
+column leak into the training matrix: **`PSCH`/`PSCD`/`PSCA` may be read only to
+compute the target label (§1). They must never appear as a column in `X` (the
+feature matrix) passed to any baseline or model.** The implementation PR must
+include a test asserting this - e.g. build the feature matrix, assert none of
+`PSCH`/`PSCD`/`PSCA` (or any column name containing `C` suffix close-price
+columns) are present among its columns.
+
+Before fitting anything, this PR must also resolve the two open items from
 [issue #7](https://github.com/Alexul-AI/football-odds-lab/issues/7):
 
 - **Long-absence handling**: `rest_days` values from a promotion/relegation gap
