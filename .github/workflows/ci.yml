@@ -3,8 +3,10 @@ name: CI
 on:
   push:
     branches: [main]
+  # No branches filter: this project uses stacked claude/<feature> branches (a PR
+  # based on another not-yet-merged PR's branch, not on main), so CI needs to run
+  # against whatever base a PR actually targets, not just main.
   pull_request:
-    branches: [main]
 
 jobs:
   test:
