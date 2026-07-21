@@ -1,12 +1,14 @@
 # football-odds-lab PRD
 
-Status: v0.2
+Status: v0.3
 Mode: Research Lab first
 Last updated: 2026-07-21
 
 > Editorial note (2026-07-21): revised from the original v0.1 draft after review.
 > One item was removed rather than merely deprioritized - see §6 - and a few
-> sections were trimmed for ceremony. Everything else is materially unchanged.
+> sections were trimmed for ceremony. v0.3 adds §14, naming a possible future
+> research stream while keeping it explicitly unscoped and outside this
+> collaboration - see §14 for what that means precisely.
 
 ## 1. Vision
 
@@ -488,3 +490,33 @@ The project should be ambitious in data collection, but conservative in conclusi
 It is acceptable to observe many signals.
 
 It is not acceptable to believe them without validation.
+
+## 14. Deferred: "Public Context Intelligence Layer" (not scoped, not started)
+
+Named and gated here so the direction isn't lost - not an approval to start building it.
+
+- **Status: future research stream, not a current requirement.** Not scoped in
+  detail, no code, no data collection. To be introduced later as its own document
+  and its own PR, once the research base from earlier phases has proven itself -
+  not on this PRD's current timeline.
+- **Working name**: Public Context Intelligence Layer.
+- **Stated guardrails**, to be re-reviewed in full before any actual scoping work
+  starts:
+  - only open public sources;
+  - no private scraping, no bypassing logins, no fake accounts, no contact with people;
+  - no storing excess personal detail;
+  - no inferential claims about a specific person's private life (e.g. "player has
+    a problem at home");
+  - store only normalized signal labels (e.g. `morale_uncertainty`, `injury_hint`,
+    `coach_pressure`, `travel_disruption`, `lineup_uncertainty`), never
+    person-identifying narrative;
+  - every signal timestamped by public-availability time;
+  - validated only via out-of-sample effect on CLV/odds movement, never a post-hoc
+    narrative.
+- **Explicitly outside this repository and this collaboration**: any research
+  involving monitoring family members' or a player's personal circle's own
+  accounts. That, if it happens, is the user's own separate, personal work - not
+  something built, documented, or reviewed as part of this project.
+
+This section records that the topic exists and stays gated. It is not a queued
+task.
