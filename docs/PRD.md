@@ -193,7 +193,14 @@ This is the next important phase. Full methodology:
 [`docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md`](PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md).
 The leakage-safe feature builder is done (`line_movement_features.py`); the first
 baseline model's locked scope is
-[`docs/PHASE1_BASELINE_MODEL_PLAN.md`](PHASE1_BASELINE_MODEL_PLAN.md).
+[`docs/PHASE1_BASELINE_MODEL_PLAN.md`](PHASE1_BASELINE_MODEL_PLAN.md). First real
+run: **WEAK** - logistic regression beats majority-class but not the
+opening-favorite heuristic. A follow-up diagnostic
+(`scripts/run_phase1_diagnostic.py`) confirmed the favorite effect is a real,
+broad market pattern (monotonic with favorite strength, consistent across all 5
+leagues and all 10 walk-forward folds, won on larger-than-average moves) rather
+than a target-structure artifact - see the CLAUDE.md findings log for the full
+numbers before proposing a more complex model.
 
 Question:
 
