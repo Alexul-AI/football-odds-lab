@@ -13,7 +13,10 @@ hard boundaries, legal notes), and
 for exactly what each hypothesis test does and does not show, and
 [`docs/PHASE1_CONCLUSION.md`](docs/PHASE1_CONCLUSION.md) for where Phase 1 landed.
 Phase 2 planning (data source candidates, no source picked yet) is in
-[`docs/PHASE2_DATA_SOURCE_SELECTION.md`](docs/PHASE2_DATA_SOURCE_SELECTION.md).
+[`docs/PHASE2_DATA_SOURCE_SELECTION.md`](docs/PHASE2_DATA_SOURCE_SELECTION.md);
+the audit plan for the first candidate is
+[`docs/PHASE2_SOURCE_SPIKE_PLAN.md`](docs/PHASE2_SOURCE_SPIKE_PLAN.md) (plan
+only, no code yet).
 
 ## Status
 

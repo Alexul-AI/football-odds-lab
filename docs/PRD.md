@@ -250,7 +250,11 @@ it starts with picking a new data source, since opening odds alone are already
 mostly exhausted. See
 [`docs/PHASE2_DATA_SOURCE_SELECTION.md`](PHASE2_DATA_SOURCE_SELECTION.md)
 (added 2026-07-21, research/design only, no source picked yet) for the
-candidate evaluation.
+candidate evaluation. The audit plan for the first candidate (timestamped odds
+via The Odds API) is
+[`docs/PHASE2_SOURCE_SPIKE_PLAN.md`](PHASE2_SOURCE_SPIKE_PLAN.md) - plan only,
+no code, no API key obtained yet; blocked on the user obtaining/paying for
+access themselves before implementation starts.
 
 Question:
 
