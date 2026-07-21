@@ -189,22 +189,32 @@ Interpretation:
 
 ### Phase 1: Can we predict line movement before it happens?
 
-This is the next important phase.
+This is the next important phase. Full methodology:
+[`docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md`](PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md).
 
 Question:
 
-> Can public pre-match information predict the direction of future odds movement?
+> Predict future Pinnacle open-to-close movement direction using only features
+> available at or before the opening snapshot, excluding any feature derived from
+> the future closing line.
 
-Candidate signals:
+**Not** "early odds drift" - with only two snapshots per match (open, close), there
+is no third, earlier point to measure drift from; the open-to-close delta already
+is the prediction target, so using a piece of it as a feature would be leakage or a
+tautology. See the methodology doc's dedicated section on this.
 
-- early odds drift;
+Honest baseline (details in the methodology doc): league, home/away, opening odds
+level and overround, day of week, season stage, rest days, match congestion, and
+strictly-lagged rolling team-level CLV-direction/efficiency features.
+
+Candidate external signals for later, once the baseline is understood, in order of
+lowest to highest effort/risk - see §12:
+
 - public injury/news signals;
 - lineup uncertainty;
 - coach statements;
 - official social media context (player/coach/club);
-- local media intensity;
-- schedule/travel fatigue;
-- team morale indicators.
+- local media intensity.
 
 Start with the cleanest measurable baseline first: odds movement + match metadata only,
 no external signals at all. Add §4.3/§4.4 sources one at a time only once that baseline

@@ -8,8 +8,10 @@ See [`docs/PRD.md`](docs/PRD.md) for the product plan (stages, ethical boundarie
 what's in/out of scope), [`CLAUDE.md`](CLAUDE.md) for full project context (goals,
 hard boundaries, legal notes), and
 [`docs/PHASE0_METHODOLOGY.md`](docs/PHASE0_METHODOLOGY.md) /
-[`docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md`](docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md)
-for exactly what each hypothesis test does and does not show.
+[`docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md`](docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md) /
+[`docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md`](docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md)
+for exactly what each hypothesis test does and does not show (Phase 1 is
+methodology-only so far, not yet implemented).
 
 ## Status
 
