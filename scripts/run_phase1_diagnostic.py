@@ -291,6 +291,15 @@ def main() -> None:
         "market pattern, or an artifact of the target's structure / concentrated in a "
         "few leagues or years / won mostly on near-noise micro-movements?",
         "",
+        "**Read this report's word 'edge' as 'wins this classification comparison,' "
+        "never as 'profitable betting edge.'** Everything below is about whether the "
+        "line's OWN direction of movement is predictable - it says nothing about "
+        "entry price, vig/margin, odds availability, account limits, or execution "
+        "timing, all of which are required before 'predictable direction' could ever "
+        "become 'positive EV' (Phase 2's question, not this one's, and not yet asked "
+        "here). A strong, stable pattern in *movement direction* is not the same claim "
+        "as a proven betting edge - do not read it as one.",
+        "",
     ]
     lines += section_target_distribution(dataset, favorite_pred)
     lines += section_odds_buckets(dataset, favorite_pred)
