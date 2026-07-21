@@ -15,6 +15,41 @@ Goal here is narrow: pick 1-2 real candidates worth a small verification spike,
 not survey everything that exists. Social/press-conference sources stay in the
 backlog per `docs/PRD.md` §14 and §12 - not evaluated here on purpose.
 
+## Sources checked (verified 2026-07-21)
+
+Every pricing/historical-depth/ToS claim below is anchored to one of these -
+re-check the live page before trusting a number here if it's been a while,
+same standard as every other "verify before relying on it" note in this repo:
+
+- The Odds API: [pricing/overview](https://the-odds-api.com/),
+  [historical odds data](https://the-odds-api.com/historical-odds-data/),
+  [terms and conditions](https://the-odds-api.com/terms-and-conditions.html)
+- Betfair: [Historical Data Services API](https://developer.betfair.com/historical-data-services-api/),
+  [Historic Data Site guide](https://betfair-datascientists.github.io/data/usingHistoricDataSite/)
+- API-Football: [pricing](https://www.api-football.com/pricing),
+  [documentation v3](https://www.api-football.com/documentation-v3),
+  [getting started guide](https://www.api-football.com/news/post/how-to-get-started-with-api-football-the-complete-beginners-guide)
+- Sportmonks: [lineups and formations tutorial](https://docs.sportmonks.com/v3/tutorials-and-guides/tutorials/lineups-and-formations),
+  [Champions League API page](https://www.sportmonks.com/football-api/champions-league-api/)
+
+## Candidate roles - not interchangeable
+
+Two different jobs, worth keeping distinct so they don't get compared as if
+competing for the same slot:
+
+- **Methodological fix for line-movement itself** - candidate #3 (timestamped
+  odds snapshots). Doesn't add a new information channel; closes a gap in how
+  the *existing* price series can be studied.
+- **Exogenous signal candidates** - #1 (injuries/team news), #2 (lineups), #4
+  (fixture congestion/travel). These are genuinely new information beyond the
+  price series itself.
+- **Historical depth / data floor is a source limitation, not a project
+  bug.** Every time this project has hit one (football-data.co.uk's Max/Avg
+  columns, the sibling `ai-trading-agent` project's ETF Rotation attempt, and
+  candidate #3 below), it's been a real, external constraint of the data
+  provider - the fix is picking/scoping around it consciously, not treating it
+  as something to debug in this project's own code.
+
 ## Evaluation matrix
 
 Every candidate scored against:
@@ -63,8 +98,9 @@ known before the market has fully absorbed it, that's a real signal.
   candidate here.
 - **Legal/ethical safety**: clean - official team news via a standard
   commercial API, no personal-circle monitoring.
-- **Cost/reliability**: API-Football plans start at $19/month, all endpoints
-  included at every tier. Established provider (api-football.com / api-sports.io).
+- **Cost/reliability** (verified 2026-07-21): API-Football plans start at
+  $19/month, all endpoints included at every tier. Established provider
+  (api-football.com / api-sports.io).
 
 **Verdict: strong hypothesis, real unverified risk on historical depth for our
 specific leagues/seasons.** Worth a small spike (a handful of real API calls
@@ -111,9 +147,10 @@ let that question finally be asked honestly.
   intervals from June 2020, 5-minute intervals from September 2022 onward.
   Betfair's Historical Data service has time-stamped Exchange data (price,
   volume, BSP) since 2016.
-- **Historical depth - the real problem**: neither source reaches back to
-  2012-13. **The Odds API starts June 2020; Betfair's modern API-based archive
-  starts 2016.** Both fall well short of this project's current 2012-2025
+- **Historical depth - the real problem** (verified 2026-07-21): neither source
+  reaches back to 2012-13. **The Odds API starts June 2020; Betfair's modern
+  API-based archive starts 2016.** Both fall well short of this project's
+  current 2012-2025
   range. Adopting either means either (a) restricting any backtest using this
   data to a shorter window (2020-2025 or 2016-2025), a real loss of
   statistical power and multi-window validation ability versus what Phase 0/0.5
@@ -136,10 +173,10 @@ let that question finally be asked honestly.
   exchange, not a fixed-odds book like Pinnacle) - real, sharp, but not
   directly the same thing being compared against elsewhere in this project;
   worth noting, not necessarily disqualifying.
-- **Cost/reliability**: The Odds API Business plan $99/month (full historical
-  archive + Pinnacle + international books at no extra credit cost). Betfair
-  has a free tier (last-traded-price-per-minute only, no volume) plus paid
-  tiers for higher frequency/full price ladder.
+- **Cost/reliability** (verified 2026-07-21): The Odds API Business plan
+  $99/month (full historical archive + Pinnacle + international books at no
+  extra credit cost). Betfair has a free tier (last-traded-price-per-minute
+  only, no volume) plus paid tiers for higher frequency/full price ladder.
 
 **Verdict: strongest methodological justification of the five, best entity-
 resolution story, no execution-timing risk - but capped at ~5-6 years of
