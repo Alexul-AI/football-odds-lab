@@ -80,6 +80,22 @@ silently paper over - if these features end up mattering, it's worth checking
 whether a supplementary fixture-list source (even just match dates, not odds) could
 close it. Not required to start.
 
+### Known limitation: promotion/relegation produces extreme rest-days outliers
+
+Confirmed empirically once the feature builder was run against the full dataset
+(2026-07-21): `home_rest_days` had a max of 3009 days. Real example, not a parsing
+bug - Sunderland's last Premier League match in this dataset was 2017-05-21; they
+were relegated, spent 8 seasons outside the top-5 leagues (not in this dataset,
+same root cause as the fixture-load gap above), and returned for 2025-26, with
+their first match back showing a "rest days" value spanning the entire absence.
+This is honest given what the feature is actually measuring ("days since this
+team's last match *in this dataset*"), not a bug to fix in the feature builder -
+but a model consuming this feature raw would treat an 8-year gap the same shape as
+a normal 3-10 day gap, which is almost certainly wrong. Handling this (clipping,
+winsorizing, or an explicit "newly promoted / returning from an absence" indicator)
+is a modeling-stage decision for the walk-forward baseline (PR #7), not something
+the feature builder should silently decide on its behalf.
+
 ### Known limitation: rolling features need real warm-up
 
 A team's first several appearances in the dataset have thin-to-nonexistent rolling
