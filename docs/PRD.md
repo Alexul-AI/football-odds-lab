@@ -1,0 +1,490 @@
+# football-odds-lab PRD
+
+Status: v0.2
+Mode: Research Lab first
+Last updated: 2026-07-21
+
+> Editorial note (2026-07-21): revised from the original v0.1 draft after review.
+> One item was removed rather than merely deprioritized - see §6 - and a few
+> sections were trimmed for ceremony. Everything else is materially unchanged.
+
+## 1. Vision
+
+`football-odds-lab` is a football betting research lab.
+
+The goal is not to build a betting bot first. The goal is to find out whether football markets contain a real, reproducible, look-ahead-free edge.
+
+The project should grow in stages:
+
+1. Historical odds research.
+2. Market movement research.
+3. External signal research.
+4. Paper-mode prediction journal.
+5. Only much later: legally reviewed betting workflows through allowed local channels.
+
+The guiding principle:
+
+> Evidence first. Automation later. Real betting last, if ever.
+
+## 2. Product Thesis
+
+Football outcomes and odds may be affected by information that reaches the market unevenly:
+
+- player injuries;
+- lineup uncertainty;
+- a player's own public statements about form, fitness, or personal circumstances;
+- travel fatigue;
+- coach statements;
+- training reports;
+- club politics;
+- local news;
+- official social media channels (player, coach, club);
+- fan/community rumors;
+- bookmaker line movement.
+
+The hypothesis is not "social media predicts matches."
+
+The real hypothesis is:
+
+> Public information around players, coaches, and clubs may sometimes appear before odds fully adjust. If captured ethically and tested rigorously, it may help predict line movement or market mispricing.
+
+This must be proven, not assumed.
+
+## 3. Current Product Mode
+
+The current mode is **Research Lab**.
+
+The system may:
+
+- download historical odds;
+- analyze historical results;
+- test hypotheses;
+- generate reports;
+- compare odds movement;
+- evaluate signals;
+- document negative findings.
+
+The system must not:
+
+- place bets;
+- tell the user "bet on X today";
+- scrape private data;
+- harass players or families;
+- bypass platform restrictions;
+- use non-public personal information;
+- monitor family members or a player's personal circle as an instrumented signal source, even if their posts are technically public - see §6;
+- imply legal approval for betting.
+
+## 4. Long-Term Direction
+
+Long term, the project may become a multi-source football intelligence system.
+
+Possible data domains:
+
+### 4.1 Odds Data
+
+- opening odds;
+- closing odds;
+- bookmaker overround;
+- line movement;
+- cross-bookmaker spread;
+- market liquidity proxies;
+- Pinnacle as sharp reference;
+- local legal bookmaker odds if available.
+
+### 4.2 Match Data
+
+- team strength;
+- recent form;
+- home/away context;
+- schedule congestion;
+- travel distance;
+- rest days;
+- injuries;
+- suspensions;
+- expected lineups;
+- weather;
+- referee tendencies.
+
+### 4.3 News Data
+
+- club news;
+- local sports portals;
+- press conferences;
+- coach quotes;
+- training reports;
+- transfer rumors;
+- disciplinary issues.
+
+**Data availability caveat**: unlike odds data, there is no free, reliable point-in-time
+archive of news/press coverage going back years. Expect most of this domain to be
+validatable only *prospectively*, by collecting it going forward through the Phase 3
+paper journal (§5, §9) - not by backtesting against years of historical odds the way
+Phase 0/0.5 did. This is the same wall `ai-trading-agent` hit with its sentiment/insider
+filters (current-state-only APIs, no historical snapshot) - worth stating now so it
+isn't a surprise later. Where a genuine historical archive does exist for some source,
+use it; don't assume one exists by default.
+
+### 4.4 Public Social Signals
+
+Only public, ethically accessible information, and only about the public figures
+themselves - not their family or personal circle (see §6 for why that line matters
+and is firm, not a matter of degree).
+
+Potential sources:
+
+- players' own public posts/statements;
+- coaches' public posts/statements;
+- club staff public posts;
+- public comments from local journalists;
+- public fan/community signals.
+
+This data should be treated as weak, noisy context, not truth.
+
+### 4.5 Sentiment and Context Signals
+
+Possible extracted features, all derived from the sources in §4.3/§4.4 above:
+
+- injury hints;
+- confidence/motivation;
+- squad morale;
+- coach pressure;
+- fan unrest;
+- local media pessimism/optimism;
+- uncertainty spikes;
+- contradiction between official and unofficial narratives.
+
+Every signal must be timestamped by when it became publicly available.
+
+## 5. Core Research Questions
+
+### Phase 0: Does line movement contain real signal?
+
+Already tested through CLV.
+
+Question:
+
+> If we know where Pinnacle moved from open to close, would betting the moved-toward side at open have been profitable?
+
+Interpretation:
+
+- useful mechanism discovery;
+- not live-tradeable;
+- uses future information.
+
+### Phase 0.5: Does same-time cross-bookmaker value work?
+
+Question:
+
+> At the same timestamp, does comparing Pinnacle fair price to retail price reveal edge?
+
+Interpretation:
+
+- useful anti-look-ahead test;
+- `Max` prices can create selection artifacts;
+- `Avg` is more honest;
+- negative result should be preserved.
+
+### Phase 1: Can we predict line movement before it happens?
+
+This is the next important phase.
+
+Question:
+
+> Can public pre-match information predict the direction of future odds movement?
+
+Candidate signals:
+
+- early odds drift;
+- public injury/news signals;
+- lineup uncertainty;
+- coach statements;
+- official social media context (player/coach/club);
+- local media intensity;
+- schedule/travel fatigue;
+- team morale indicators.
+
+Start with the cleanest measurable baseline first: odds movement + match metadata only,
+no external signals at all. Add §4.3/§4.4 sources one at a time only once that baseline
+exists and is understood - see §12.
+
+Success criteria:
+
+- no look-ahead;
+- signal timestamp is before odds movement;
+- positive out-of-sample CLV;
+- robust across time windows;
+- not dependent on one league or one lucky period.
+
+### Phase 2: Can predicted line movement become positive EV?
+
+Question:
+
+> If we predict line movement early, can that translate into positive expected value after vig?
+
+Success criteria:
+
+- positive CLV;
+- positive or near-positive ROI;
+- sufficient sample size;
+- realistic bet-placement rate;
+- no hidden threshold tuning.
+
+### Phase 3: Paper-mode signal journal
+
+Before any real betting, the system should run in paper mode.
+
+It should log:
+
+- match;
+- timestamp;
+- available data at that time;
+- model/signal output;
+- implied probability;
+- bookmaker odds;
+- hypothetical decision;
+- closing odds;
+- final result;
+- profit/loss if paper bet existed.
+
+The paper journal must be immutable enough to prevent hindsight editing.
+
+This is also where most §4.3/§4.4 signals get their real validation, per the data
+availability caveat in §4.3 - prospective collection, not retrospective backtesting.
+
+### Phase 4: Legal betting workflow
+
+Only much later.
+
+Possible local context:
+
+- Winner / Israeli legal sports betting channel;
+- מפעל הפיס or related legal channels, if applicable;
+- jurisdiction-specific legal review.
+
+Before this phase:
+
+- consult a lawyer;
+- verify what is legal in Israel;
+- verify platform terms;
+- define bankroll risk;
+- define account-limiting assumptions;
+- decide whether real betting is even acceptable.
+
+This phase is not approved by default.
+
+## 6. Ethical and Legal Boundaries
+
+The project may use:
+
+- public odds;
+- public match data;
+- public news;
+- a player/coach/club's own public statements and official social media;
+- public reports.
+
+The project must not use:
+
+- hacked data;
+- private accounts;
+- leaked medical/private information;
+- direct contact with players or relatives;
+- intimidation, pressure, manipulation;
+- automated stalking;
+- hidden identity accounts;
+- anything requiring platform abuse.
+
+**Family and personal-circle monitoring is explicitly out of scope, not merely
+"handle carefully."** An earlier draft of this document treated a player's family/
+personal-circle public posts as a candidate signal source, gated by an ethical
+framing ("a public post appears to suggest..." vs. "we know private facts"). That
+framing was rejected on review: systematically mining a private individual's public
+posts to infer something about someone else is a privacy harm in itself - the fact
+that a post is technically public doesn't mean its author consented to being an
+instrumented data point in someone else's research, commercial or not. This isn't a
+question of degree or careful framing; it's excluded. If this is ever reconsidered,
+it needs its own explicit decision and review, not a rewording of this section.
+
+Allowed framing:
+
+> "The player's own public statement suggests uncertainty/fatigue/injury context."
+
+Not allowed:
+
+> "A family member's post suggests X about the player" (any form) - or any use of
+> non-public medical/family information, regardless of source.
+
+The system must never expose unnecessary personal details in reports. Prefer aggregated signal labels over quoting or naming private individuals.
+
+## 7. Research PR Checklist
+
+Every research PR should be able to check these off - a checklist, not a narrative
+essay to write out each time:
+
+- [ ] Hypothesis stated in one sentence
+- [ ] Look-ahead check: is this retrospective-only or genuinely live-tradeable?
+- [ ] Data source and date range documented
+- [ ] Dropped rows counted and reported (not silently discarded)
+- [ ] Windows/thresholds pre-specified before looking at results (no post-hoc tuning)
+- [ ] Sample size sufficient for the claim being made
+- [ ] CI passing
+- [ ] Negative/null results documented as prominently as positive ones
+
+A result is not trusted just because tests pass.
+
+## 8. Data Governance
+
+Every data source needs metadata:
+
+- source name;
+- access method;
+- timestamp;
+- public/private classification;
+- legal/terms risk;
+- freshness;
+- reliability;
+- known gaps;
+- whether it can be used historically;
+- whether it can be used in paper/live mode.
+
+For news/social data specifically, every extracted feature must include:
+
+- source timestamp;
+- collection timestamp;
+- match timestamp;
+- signal category;
+- confidence;
+- whether the information was available before market movement.
+
+## 9. Architecture Roadmap
+
+Same rule at every stage below, not just the first one: **don't build the next
+stage's structure until real, repeated duplication in the current stage actually
+forces it.** This roadmap describes what a stage looks like *if and when* it's
+needed, not a schedule to build against.
+
+### Stage 1: Simple Research Scripts
+
+Current architecture, and the only one that exists today:
+
+```text
+src/football_odds_lab/
+  data_sources/
+  analysis/
+scripts/
+docs/
+tests/
+```
+
+### Stage 2: Experiment Runner
+
+Only once several experiments have real, repeated duplication in how they load data,
+run a hypothesis, and write a report:
+
+```text
+configs/experiments/
+src/football_odds_lab/experiments/
+src/football_odds_lab/reporting/
+fixtures/
+```
+
+Goal: repeatable experiments, standardized reports, easier comparison across
+hypotheses.
+
+### Stage 3: Signal Pipeline
+
+Only once Phase 1's clean baseline (odds + match metadata) is done and has earned a
+next signal to add. Modules for:
+
+- odds movement features;
+- news features;
+- social signal features (player/coach/club official channels only - see §6);
+- team/player context features;
+- feature timestamp validation.
+
+No live betting yet.
+
+### Stage 4: Paper Journal
+
+- daily candidate generation;
+- timestamped signal snapshots;
+- paper decisions;
+- result reconciliation.
+
+### Stage 5: Dashboard / Notion
+
+Only after the research workflow is stable. Views:
+
+- hypothesis results;
+- signal history;
+- paper-mode outcomes;
+- CLV trends;
+- ROI trends;
+- sample size warnings;
+- negative findings.
+
+## 10. Success Metrics
+
+Research success:
+
+- positive out-of-sample CLV;
+- positive or explainable ROI;
+- stable performance across windows;
+- low evidence of overfitting;
+- honest negative findings.
+
+Engineering success:
+
+- clean CI;
+- reproducible reports;
+- small pure modules;
+- documented methodology;
+- easy PR review.
+
+Product success:
+
+- the project makes better research decisions;
+- weak ideas are killed early;
+- promising mechanisms are promoted carefully;
+- no false confidence is created.
+
+## 11. Immediate Next Steps
+
+1. Keep Phase 0 and Phase 0.5 documented (done).
+2. Define and build Phase 1's clean baseline: predict closing-line direction using
+   only odds movement + match metadata, no external signals yet.
+3. Add fixture-based tests for data loading/report generation once Stage 2 is
+   actually warranted (see §9 - not before).
+4. Start a "signal catalog" document (see §12) as candidate signals get added one at
+   a time, not all at once.
+
+## 12. Next Hypothesis Candidate
+
+A good next hypothesis:
+
+> Public pre-match information and early odds movement can predict future Pinnacle closing-line direction better than chance.
+
+Initial simple version:
+
+- no external signals yet;
+- use only odds movement and match metadata;
+- establish baseline.
+
+Then add signals one at a time, from lowest to highest effort/risk, all within the
+§6 boundary (official/public-figure sources only, never family/personal circle):
+
+1. team/player injury news;
+2. coach press conference signals;
+3. local news sentiment;
+4. official player/club social media channels.
+
+Start with the cleanest measurable baseline. Don't add a new signal source until the
+previous one has been evaluated on its own.
+
+## 13. Final Principle
+
+The project should be ambitious in data collection, but conservative in conclusions.
+
+It is acceptable to observe many signals.
+
+It is not acceptable to believe them without validation.
