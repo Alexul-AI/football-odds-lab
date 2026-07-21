@@ -18,7 +18,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from football_odds_lab.analysis.clv_hypothesis import HypothesisTestResult, select_bet_and_profit, summarize_bets
+from football_odds_lab.analysis.betting_stats import HypothesisTestResult, summarize_bets
+from football_odds_lab.analysis.clv_hypothesis import select_bet_and_profit
 from football_odds_lab.analysis.odds_math import overround
 from football_odds_lab.data_sources.football_data_co_uk import EARLIEST_SEASON_START_YEAR, LEAGUES, download_all
 
