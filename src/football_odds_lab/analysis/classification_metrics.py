@@ -48,6 +48,28 @@ def multiclass_brier_score(y_true: list[str], proba: np.ndarray) -> float:
     return float(np.mean(np.sum((proba - one_hot) ** 2, axis=1)))
 
 
+def expected_weighted_random_accuracy(
+    reference_class_frequencies: dict[str, float], evaluation_class_frequencies: dict[str, float]
+) -> float:
+    """Closed-form expected accuracy of a baseline that guesses each match's class
+    by random draw from `reference_class_frequencies` (e.g. the train fold's class
+    mix), scored against matches whose true labels occur at
+    `evaluation_class_frequencies` (e.g. the validation fold's actual mix).
+
+    P(a given match is guessed correctly) = sum_c P(true=c) * P(guess=c), since the
+    guess and the true label are independent draws - this is that sum, computed
+    analytically rather than by actually sampling, so the report this feeds into
+    doesn't need a random seed to be reproducible. Always <= the majority-class
+    baseline's expected accuracy for the same distributions (guessing the mode
+    every time beats guessing randomly in proportion) - included for context on
+    how much of any baseline's edge is "there's structure at all" vs specific to
+    that baseline's rule.
+    """
+    return sum(
+        reference_class_frequencies.get(c, 0.0) * evaluation_class_frequencies.get(c, 0.0) for c in OUTCOMES
+    )
+
+
 @dataclass(frozen=True)
 class CalibrationBin:
     predicted_range: tuple[float, float]
