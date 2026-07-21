@@ -32,15 +32,23 @@ class HypothesisTestResult:
 
 
 def summarize_bets(bets: Sequence[BetOutcome]) -> HypothesisTestResult:
+    n = len(bets)
+    if n == 0:
+        raise ValueError("summarize_bets: cannot summarize zero bets - check for an empty segment first")
+
     profits = np.array([b.profit for b in bets], dtype=float)
-    n = len(profits)
     total_staked = float(n)
     total_profit = float(profits.sum())
     mean_profit = float(profits.mean())
 
-    t_stat, p_value = stats.ttest_1samp(profits, popmean=0.0)
-    sem = stats.sem(profits)
-    ci_low, ci_high = stats.t.interval(0.95, df=n - 1, loc=mean_profit, scale=sem)
+    if n < 2:
+        # A single bet has no meaningful variance/CI/significance - NaN is the honest
+        # answer, returned deliberately rather than via scipy's own small-sample warnings.
+        t_stat, p_value, ci_low, ci_high = float("nan"), float("nan"), float("nan"), float("nan")
+    else:
+        t_stat, p_value = stats.ttest_1samp(profits, popmean=0.0)
+        sem = stats.sem(profits)
+        ci_low, ci_high = stats.t.interval(0.95, df=n - 1, loc=mean_profit, scale=sem)
 
     return HypothesisTestResult(
         n_bets=n,
