@@ -261,6 +261,13 @@ one real caveat (coverage figures depend on snapshot sampling density, not
 just source availability). Confirms the source is usable - does not mean
 Phase 2 itself is done; EV/vig/betting economics haven't been touched yet.
 
+The EV/betting-economics methodology itself is
+[`docs/PHASE2_EV_METHODOLOGY.md`](PHASE2_EV_METHODOLOGY.md) (added 2026-07-21,
+methodology only, no code) - synthesizes Phase 0's temporal-movement finding
+and Phase 0.5's cross-bookmaker finding into one retrospective EV test, with
+explicit guardrails against the Max-selection-bias artifact Phase 0.5 already
+caught once and threshold/timestamp cherry-picking.
+
 Question:
 
 > If we predict line movement early, can that translate into positive expected value after vig?

@@ -16,7 +16,9 @@ Phase 2 planning (data source candidates) is in
 [`docs/PHASE2_DATA_SOURCE_SELECTION.md`](docs/PHASE2_DATA_SOURCE_SELECTION.md);
 the first candidate (The Odds API) has been audited -
 [`docs/PHASE2_SOURCE_SPIKE_PLAN.md`](docs/PHASE2_SOURCE_SPIKE_PLAN.md)'s
-"Result" section has the verdict (**ACCEPT**) and real numbers.
+"Result" section has the verdict (**ACCEPT**) and real numbers. The EV/betting-
+economics methodology itself (still no code) is
+[`docs/PHASE2_EV_METHODOLOGY.md`](docs/PHASE2_EV_METHODOLOGY.md).
 
 ## Requires an API key for the Phase 2 spike script
 
