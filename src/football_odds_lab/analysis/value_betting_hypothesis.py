@@ -17,9 +17,7 @@ not a tuned threshold.
 
 from dataclasses import dataclass
 
-from football_odds_lab.analysis.odds_math import devig_multiplicative
-
-OUTCOMES = ("H", "D", "A")
+from football_odds_lab.analysis.odds_math import OUTCOMES, devig_multiplicative
 
 
 def compute_edge(fair_devigged_prob: float, market_odds: float) -> float:

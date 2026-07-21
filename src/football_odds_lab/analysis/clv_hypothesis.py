@@ -24,11 +24,9 @@ signal that predicts the move before it happens.
 from dataclasses import dataclass
 
 from football_odds_lab.analysis.betting_stats import HypothesisTestResult, summarize_bets
-from football_odds_lab.analysis.odds_math import clv_edge, devig_multiplicative
+from football_odds_lab.analysis.odds_math import OUTCOMES, clv_edge, devig_multiplicative
 
 __all__ = ["MatchBet", "select_bet_and_profit", "HypothesisTestResult", "summarize_bets"]
-
-OUTCOMES = ("H", "D", "A")
 
 
 @dataclass(frozen=True)
