@@ -245,6 +245,13 @@ Success criteria:
 
 ### Phase 2: Can predicted line movement become positive EV?
 
+Per `docs/PHASE1_CONCLUSION.md`, Phase 2 doesn't start with a methodology doc -
+it starts with picking a new data source, since opening odds alone are already
+mostly exhausted. See
+[`docs/PHASE2_DATA_SOURCE_SELECTION.md`](PHASE2_DATA_SOURCE_SELECTION.md)
+(added 2026-07-21, research/design only, no source picked yet) for the
+candidate evaluation.
+
 Question:
 
 > If we predict line movement early, can that translate into positive expected value after vig?
