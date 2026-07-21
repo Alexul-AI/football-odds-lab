@@ -133,3 +133,33 @@ A single spike report (`docs/PHASE2_SOURCE_SPIKE_REPORT.md` or under
   entity matchability against the existing dataset.
 - Expanding league/season scope beyond what's written above without updating
   this document first.
+
+## Result (2026-07-21): ACCEPT
+
+Real run against the live API, E0 2023-24 season, 18 biweekly snapshots, 19 of
+the 200-request budget used:
+
+- **Coverage**: 275/295 fixtures seen had a Pinnacle H2H price (93.2%); only
+  72.4% of the full 380-match season was seen at all with this biweekly
+  cadence - a sampling-cadence artifact of this spike's snapshot spacing, not
+  a ceiling on the source itself (see the full report for why).
+- **Timestamp granularity**: confirmed exactly 5.0 minutes between
+  consecutive snapshots, matching the advertised interval for this period.
+- **Entity matching**: 98.6% (291/295) using the explicit E0 team-name map -
+  4 unmatched cases, all date-boundary mismatches, each with a stated reason
+  (see `entity_matching.py`).
+- **Price agreement**: 271 matches cross-checked against
+  football-data.co.uk's own Pinnacle opening price - mean absolute
+  devigged-probability difference 0.0156, small and consistent with genuine,
+  correctly-extracted data rather than noise or a parsing bug.
+- **Reproducibility**: re-fetching one snapshot uncached returned
+  byte-identical data to the cached copy - confirms a genuine historical
+  archive, not a live/mutable endpoint that could quietly change under us.
+
+**Read this as "the source checks out for a proper Phase 2 pipeline," not as
+"Phase 2 is done."** This was 18 requests against one league, one season,
+audit-only - the coverage gap above needs a denser sampling cadence before any
+real methodology work, and this spike still hasn't touched EV, vig, or
+betting economics of any kind. Full data-level report:
+`reports/phase2-source-spike-report.md` (gitignored, local only, same
+convention as every other phase's report).
