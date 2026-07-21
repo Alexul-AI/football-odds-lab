@@ -200,7 +200,12 @@ opening-favorite heuristic. A follow-up diagnostic
 broad market pattern (monotonic with favorite strength, consistent across all 5
 leagues and all 10 walk-forward folds, won on larger-than-average moves) rather
 than a target-structure artifact - see the CLAUDE.md findings log for the full
-numbers before proposing a more complex model.
+numbers before proposing a more complex model. Phase 1 is now formally
+concluded: [`docs/PHASE1_CONCLUSION.md`](PHASE1_CONCLUSION.md) - opening odds
+already encode most available pre-match signal; more schedule/rolling features
+in the same family are not expected to help further without new evidence.
+Next: either Phase 2 (does the existing favorite signal convert to positive EV
+net of vig) or a genuinely different feature family, not more of the same kind.
 
 Question:
 
