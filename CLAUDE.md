@@ -20,9 +20,14 @@ Research Lab → Signal Intelligence → Paper Journal → Legal betting workflo
 (`src/football_odds_lab/analysis/line_movement_features.py`, PR #6, с leakage-тестами) — открытые
 вопросы перед моделью зафиксированы в [issue #7](https://github.com/Alexul-AI/football-odds-lab/issues/7)
 (long-absence handling, model input policy). Скоуп первой baseline-модели зафиксирован в
-[`docs/PHASE1_BASELINE_MODEL_PLAN.md`](docs/PHASE1_BASELINE_MODEL_PLAN.md) (добавлен 2026-07-21,
-ещё не реализовано) — держать его жёстким: без новых данных, без news/social, одна честная
-walk-forward модель, null-результат репортится как есть, без «спасения нарратива».
+[`docs/PHASE1_BASELINE_MODEL_PLAN.md`](docs/PHASE1_BASELINE_MODEL_PLAN.md) (реализовано в PR #9,
+результат WEAK) — держать его жёстким: без новых данных, без news/social, одна честная
+walk-forward модель, null-результат репортится как есть, без «спасения нарратива». **Phase 1
+формально завершён**, читай [`docs/PHASE1_CONCLUSION.md`](docs/PHASE1_CONCLUSION.md) (добавлен
+2026-07-21) прежде чем предлагать больше признаков того же типа (rest days/congestion/rolling
+CLV-варианты) — opening odds уже кодируют почти весь доступный pre-match сигнал, и это не
+доказанный betting edge, а паттерн предсказуемости направления (vig/execution/лимиты аккаунта
+ещё не рассматривались, это вопрос Phase 2).
 
 **Отвечай пользователю на русском языке всегда**, независимо от языка кода, коммитов или
 документации источников данных.

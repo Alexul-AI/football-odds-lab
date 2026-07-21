@@ -10,14 +10,12 @@ hard boundaries, legal notes), and
 [`docs/PHASE0_METHODOLOGY.md`](docs/PHASE0_METHODOLOGY.md) /
 [`docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md`](docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md) /
 [`docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md`](docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md)
-for exactly what each hypothesis test does and does not show. Phase 1's
-leakage-safe feature builder is implemented; the first baseline model's scope is
-locked in [`docs/PHASE1_BASELINE_MODEL_PLAN.md`](docs/PHASE1_BASELINE_MODEL_PLAN.md)
-(not yet implemented).
+for exactly what each hypothesis test does and does not show, and
+[`docs/PHASE1_CONCLUSION.md`](docs/PHASE1_CONCLUSION.md) for where Phase 1 landed.
 
 ## Status
 
-**Phase 0 and 0.5, first pass complete.** Two hypotheses tested so far:
+**Phase 0, 0.5, and 1 complete.** Three research passes so far:
 
 - **Phase 0 (CLV)**: does Pinnacle's own opening-to-closing price movement predict
   match outcomes profitably? Both non-overlapping time windows came back positive
@@ -27,8 +25,16 @@ locked in [`docs/PHASE1_BASELINE_MODEL_PLAN.md`](docs/PHASE1_BASELINE_MODEL_PLAN
   compares Pinnacle's closing fair price against retail closing prices at the SAME
   point in time. Came back null (no significant edge in either non-overlapping
   window) once corrected for a selection-bias artifact in the naive version.
+- **Phase 1 (predict line movement before it happens)**: a leakage-safe walk-forward
+  baseline model (majority-class / opening-favorite heuristic / logistic regression)
+  came back WEAK - logistic regression beat majority-class but not the
+  opening-favorite heuristic. A follow-up diagnostic confirmed the favorite effect
+  is a real, broad market pattern, not a target-structure artifact - so the
+  conclusion is that opening odds already encode most of the available pre-match
+  signal, not that the model is broken. See
+  [`docs/PHASE1_CONCLUSION.md`](docs/PHASE1_CONCLUSION.md).
 
-See both methodology docs before drawing conclusions from either - the honest
+See the methodology docs before drawing conclusions from any of these - the honest
 limitations matter as much as the headline numbers.
 
 ## Setup
