@@ -5,6 +5,7 @@ import numpy as np
 from football_odds_lab.analysis.classification_metrics import (
     accuracy,
     calibration_summary,
+    expected_weighted_random_accuracy,
     multiclass_brier_score,
     multiclass_log_loss,
 )
@@ -62,3 +63,26 @@ def test_calibration_summary_omits_empty_bins():
     bins = calibration_summary(y_true, proba, n_bins=5)
     assert len(bins) == 1
     assert bins[0].n_samples == 5
+
+
+def test_expected_weighted_random_accuracy_identical_distributions():
+    # If reference == evaluation, expected accuracy is sum of squared frequencies.
+    freqs = {"H": 0.45, "D": 0.25, "A": 0.30}
+    expected = 0.45**2 + 0.25**2 + 0.30**2
+    assert math.isclose(expected_weighted_random_accuracy(freqs, freqs), expected, abs_tol=1e-9)
+
+
+def test_expected_weighted_random_accuracy_always_worse_than_majority_baseline():
+    # Guessing the mode every time must beat weighted-random guessing, for any
+    # non-degenerate distribution - this is what justifies using majority-class
+    # as the "real" floor baseline rather than random guessing.
+    freqs = {"H": 0.45, "D": 0.25, "A": 0.30}
+    majority_accuracy = max(freqs.values())  # always guessing "H"
+    weighted_random = expected_weighted_random_accuracy(freqs, freqs)
+    assert weighted_random < majority_accuracy
+
+
+def test_expected_weighted_random_accuracy_zero_when_disjoint_support():
+    reference = {"H": 1.0, "D": 0.0, "A": 0.0}
+    evaluation = {"H": 0.0, "D": 0.0, "A": 1.0}
+    assert expected_weighted_random_accuracy(reference, evaluation) == 0.0

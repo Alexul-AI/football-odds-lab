@@ -33,19 +33,18 @@ from football_odds_lab.analysis.line_movement_baselines import (
     fit_majority_class_baseline,
     opening_favorite_heuristic_predict,
 )
-from football_odds_lab.analysis.line_movement_features import build_line_movement_features, parse_match_dates
+from football_odds_lab.analysis.line_movement_features import parse_match_dates
 from football_odds_lab.analysis.line_movement_preprocessing import (
     apply_long_absence_handling,
     drop_cold_start_rows,
     fit_preprocessor,
 )
-from football_odds_lab.analysis.line_movement_target import TARGET_COLUMN, build_targets
+from football_odds_lab.analysis.line_movement_target import TARGET_COLUMN
+from football_odds_lab.analysis.phase1_dataset import REQUIRED_COLUMNS, build_dataset_with_target
 from football_odds_lab.analysis.walk_forward import Fold, generate_expanding_season_folds, split_fold
 from football_odds_lab.data_sources.football_data_co_uk import EARLIEST_SEASON_START_YEAR, download_all
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-REQUIRED_COLUMNS = ["PSH", "PSD", "PSA", "PSCH", "PSCD", "PSCA", "FTR"]
-CLOSE_ODDS_COLUMNS = ["PSCH", "PSCD", "PSCA"]
 MIN_TRAIN_SEASONS = 4
 
 
@@ -58,16 +57,6 @@ def load_dataset(cache_dir: Path) -> pd.DataFrame:
         print(f"Dropped {dropped}/{before} rows missing required odds/result columns.", file=sys.stderr)
     df["Date"] = parse_match_dates(df["Date"])
     return df
-
-
-def build_dataset_with_target(df: pd.DataFrame) -> pd.DataFrame:
-    """Computes the target from close odds, THEN drops the close-odds columns -
-    structurally, nothing downstream of this function can ever see them again."""
-    targets = build_targets(df)
-    featured = build_line_movement_features(df).assign(**{TARGET_COLUMN: targets})
-    featured = featured.drop(columns=CLOSE_ODDS_COLUMNS)
-    assert not (set(CLOSE_ODDS_COLUMNS) & set(featured.columns)), "close odds leaked past target computation"
-    return featured
 
 
 @dataclass
