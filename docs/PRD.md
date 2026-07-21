@@ -191,6 +191,9 @@ Interpretation:
 
 This is the next important phase. Full methodology:
 [`docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md`](PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md).
+The leakage-safe feature builder is done (`line_movement_features.py`); the first
+baseline model's locked scope is
+[`docs/PHASE1_BASELINE_MODEL_PLAN.md`](PHASE1_BASELINE_MODEL_PLAN.md).
 
 Question:
 

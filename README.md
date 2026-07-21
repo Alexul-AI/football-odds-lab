@@ -10,8 +10,10 @@ hard boundaries, legal notes), and
 [`docs/PHASE0_METHODOLOGY.md`](docs/PHASE0_METHODOLOGY.md) /
 [`docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md`](docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md) /
 [`docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md`](docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md)
-for exactly what each hypothesis test does and does not show (Phase 1 is
-methodology-only so far, not yet implemented).
+for exactly what each hypothesis test does and does not show. Phase 1's
+leakage-safe feature builder is implemented; the first baseline model's scope is
+locked in [`docs/PHASE1_BASELINE_MODEL_PLAN.md`](docs/PHASE1_BASELINE_MODEL_PLAN.md)
+(not yet implemented).
 
 ## Status
 

@@ -12,11 +12,17 @@ Research Lab → Signal Intelligence → Paper Journal → Legal betting workflo
 
 Для самого Phase 1 читай
 [`docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md`](docs/PHASE1_LINE_MOVEMENT_SIGNAL_METHODOLOGY.md)
-(добавлен 2026-07-21, ещё не реализован, только методология) — **особенно раздел про то, почему
-«early line movement» нельзя использовать как фичу**: `football-data.co.uk` даёт всего 2 точки
-времени на матч (open/close), само движение open→close уже является target'ом, так что фича
-на его основе — либо leakage, либо тавтология. Honest baseline строится только на признаках,
-не выведенных из будущей закрывающей линии.
+(добавлен 2026-07-21) — **особенно раздел про то, почему «early line movement» нельзя
+использовать как фичу**: `football-data.co.uk` даёт всего 2 точки времени на матч (open/close),
+само движение open→close уже является target'ом, так что фича на его основе — либо leakage,
+либо тавтология. Honest baseline строится только на признаках, не выведенных из будущей
+закрывающей линии. Сам feature builder уже реализован
+(`src/football_odds_lab/analysis/line_movement_features.py`, PR #6, с leakage-тестами) — открытые
+вопросы перед моделью зафиксированы в [issue #7](https://github.com/Alexul-AI/football-odds-lab/issues/7)
+(long-absence handling, model input policy). Скоуп первой baseline-модели зафиксирован в
+[`docs/PHASE1_BASELINE_MODEL_PLAN.md`](docs/PHASE1_BASELINE_MODEL_PLAN.md) (добавлен 2026-07-21,
+ещё не реализовано) — держать его жёстким: без новых данных, без news/social, одна честная
+walk-forward модель, null-результат репортится как есть, без «спасения нарратива».
 
 **Отвечай пользователю на русском языке всегда**, независимо от языка кода, коммитов или
 документации источников данных.
