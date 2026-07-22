@@ -39,12 +39,17 @@ def select_value_bet(
     market_odds: dict[str, float],
     actual_result: str,
     stake: float = 1.0,
+    min_edge: float = 0.0,
 ) -> ValueBet | None:
+    """min_edge defaults to 0.0 (Phase 0.5's original behavior, unchanged) - a
+    higher value implements a minimum-edge threshold (see Phase 2's EV
+    methodology, docs/PHASE2_EV_METHODOLOGY.md's threshold-sweep requirement)
+    without duplicating this selection logic in a second function."""
     fair_probs = dict(zip(OUTCOMES, devig_multiplicative([fair_odds[o] for o in OUTCOMES])))
     edges = {o: compute_edge(fair_probs[o], market_odds[o]) for o in OUTCOMES}
 
     best_side = max(edges, key=edges.get)
-    if edges[best_side] <= 0:
+    if edges[best_side] <= min_edge:
         return None
 
     won = best_side == actual_result

@@ -271,7 +271,11 @@ coverage on all four decision offsets (T-24h/12h/6h/1h), 24,338 normalized
 rows, zero EV/ROI computed (ingestion only, per scope). Caught and fixed a
 real bug before spending budget: football-data.co.uk's kickoff time is UK
 local (BST-aware), not UTC - see the methodology doc's "Ingestion result"
-section. EV/ROI computation itself is the next, separate PR.
+section. **The EV Backtest Runner is also done - result: NO EDGE** across all
+32 segments (4 offsets x 2 candidate policies x 4 thresholds), none reaching
+a 95%-CI-positive ROI. See the methodology doc's "EV Backtest result" section
+for the full table and honest read (this is the third null/weak-or-null
+result out of Phase 0-2's four hypothesis tests so far).
 
 Question:
 

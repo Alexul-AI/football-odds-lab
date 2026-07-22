@@ -58,3 +58,20 @@ def test_select_value_bet_profit_when_lost():
 
     assert bet.won is False
     assert bet.profit == -1.0
+
+
+def test_select_value_bet_default_min_edge_is_zero_unchanged_behavior():
+    # Phase 0.5's original behavior must be untouched by adding min_edge.
+    fair_odds = {"H": 2.10, "D": 3.60, "A": 3.60}
+    market_odds = {"H": 2.40, "D": 3.50, "A": 3.40}
+    assert select_value_bet(fair_odds, market_odds, actual_result="H") is not None
+
+
+def test_select_value_bet_respects_higher_min_edge_threshold():
+    # H's edge here is ~0.108 (hand-computed in test_select_value_bet_finds_the_mispriced_side).
+    # A threshold above that must reject it even though it would clear EV>0%.
+    fair_odds = {"H": 2.10, "D": 3.60, "A": 3.60}
+    market_odds = {"H": 2.40, "D": 3.50, "A": 3.40}
+
+    assert select_value_bet(fair_odds, market_odds, actual_result="H", min_edge=0.05) is not None
+    assert select_value_bet(fair_odds, market_odds, actual_result="H", min_edge=0.15) is None
