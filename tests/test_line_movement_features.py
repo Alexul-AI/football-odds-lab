@@ -6,6 +6,7 @@ import pytest
 
 from football_odds_lab.analysis.line_movement_features import (
     build_line_movement_features,
+    parse_kickoff_datetimes_utc,
     parse_match_dates,
 )
 
@@ -81,6 +82,26 @@ def test_parse_match_dates_handles_two_and_four_digit_years():
     # verified against real files, see the module docstring.
     parsed = parse_match_dates(pd.Series(["18/08/12", "10/08/2018"]))
     assert parsed.dt.year.tolist() == [2012, 2018]
+
+
+def test_parse_kickoff_datetimes_utc_converts_bst_period_correctly():
+    # Real match, real verification 2026-07-21: football-data.co.uk shows
+    # 02/04/2024 19:30 (BST, UTC+1); The Odds API's real commence_time for
+    # this exact match was 2024-04-02T18:30:00Z.
+    result = parse_kickoff_datetimes_utc(pd.Series(["02/04/2024"]), pd.Series(["19:30"]))
+    assert result.iloc[0] == pd.Timestamp("2024-04-02T18:30:00Z")
+
+
+def test_parse_kickoff_datetimes_utc_no_shift_during_gmt_period():
+    # Real match: football-data.co.uk 02/03/2024 15:00 (GMT, before BST starts
+    # for 2024) matched The Odds API's 2024-03-02T15:00:00Z exactly - no offset.
+    result = parse_kickoff_datetimes_utc(pd.Series(["02/03/2024"]), pd.Series(["15:00"]))
+    assert result.iloc[0] == pd.Timestamp("2024-03-02T15:00:00Z")
+
+
+def test_parse_kickoff_datetimes_utc_handles_missing_time():
+    result = parse_kickoff_datetimes_utc(pd.Series(["02/03/2024"]), pd.Series([None]))
+    assert result.iloc[0] == pd.Timestamp("2024-03-02T15:00:00Z")  # defaults to 15:00 local
 
 
 def test_preserves_input_row_order():
