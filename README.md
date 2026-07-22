@@ -24,6 +24,10 @@ EV backtest itself is done too: **result NO EDGE** across all 32 tested
 segments (4 offsets x 2 candidate policies x 4 thresholds). See the
 methodology doc's "EV Backtest result" section for the full table.
 
+Phases 0-2 are now a closed research cycle, all on odds-only data - see
+[`docs/RESEARCH_RESET.md`](docs/RESEARCH_RESET.md) for the combined honest
+read and the formalized direction for Phase 3 (external signal discovery).
+
 ## Requires an API key for the Phase 2 scripts
 
 `scripts/run_phase2_source_spike.py` and
@@ -34,7 +38,9 @@ network calls); pass `--execute` to actually spend budget.
 
 ## Status
 
-**Phase 0, 0.5, and 1 complete.** Three research passes so far:
+**Cycle 1 (Phase 0 through Phase 2) complete - see
+[`docs/RESEARCH_RESET.md`](docs/RESEARCH_RESET.md) for the combined read.**
+Four research passes so far, all on odds-only data:
 
 - **Phase 0 (CLV)**: does Pinnacle's own opening-to-closing price movement predict
   match outcomes profitably? Both non-overlapping time windows came back positive
@@ -52,9 +58,17 @@ network calls); pass `--execute` to actually spend budget.
   conclusion is that opening odds already encode most of the available pre-match
   signal, not that the model is broken. See
   [`docs/PHASE1_CONCLUSION.md`](docs/PHASE1_CONCLUSION.md).
+- **Phase 2 (does early bookmaker value convert to positive EV)**: an honest,
+  timestamped EV backtest against Pinnacle's close, no Max/best-of-many artifact,
+  all thresholds reported. Came back **NO EDGE** across all 32 tested segments.
+  See [`docs/PHASE2_EV_METHODOLOGY.md`](docs/PHASE2_EV_METHODOLOGY.md).
 
-See the methodology docs before drawing conclusions from any of these - the honest
-limitations matter as much as the headline numbers.
+Read together, this is a research cycle that did what it's supposed to do -
+kill weak ideas cleanly - not a project that failed. Phase 3 (external signal
+discovery) is formalized but not yet started; see `docs/RESEARCH_RESET.md`
+for the selection criteria and candidate shortlist. See the methodology docs
+before drawing conclusions from any of these - the honest limitations matter
+as much as the headline numbers.
 
 ## Setup
 
