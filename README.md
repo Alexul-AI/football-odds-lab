@@ -17,13 +17,18 @@ Phase 2 planning (data source candidates) is in
 the first candidate (The Odds API) has been audited -
 [`docs/PHASE2_SOURCE_SPIKE_PLAN.md`](docs/PHASE2_SOURCE_SPIKE_PLAN.md)'s
 "Result" section has the verdict (**ACCEPT**) and real numbers. The EV/betting-
-economics methodology itself (still no code) is
-[`docs/PHASE2_EV_METHODOLOGY.md`](docs/PHASE2_EV_METHODOLOGY.md).
+economics methodology is
+[`docs/PHASE2_EV_METHODOLOGY.md`](docs/PHASE2_EV_METHODOLOGY.md) - decision-
+snapshot ingestion is done (100% coverage, all 4 decision offsets, zero
+EV/ROI computed); the EV/ROI computation itself is the next PR.
 
-## Requires an API key for the Phase 2 spike script
+## Requires an API key for the Phase 2 scripts
 
-`scripts/run_phase2_source_spike.py` needs `THE_ODDS_API_KEY` in a local
-`.env` file (see `.env.example`) - never commit a real key.
+`scripts/run_phase2_source_spike.py` and
+`scripts/run_phase2_decision_snapshot_fetch.py` need `THE_ODDS_API_KEY` in a
+local `.env` file (see `.env.example`) - never commit a real key. The fetch
+script defaults to a dry run (prints the request/credit estimate, makes no
+network calls); pass `--execute` to actually spend budget.
 
 ## Status
 

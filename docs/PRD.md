@@ -262,11 +262,16 @@ just source availability). Confirms the source is usable - does not mean
 Phase 2 itself is done; EV/vig/betting economics haven't been touched yet.
 
 The EV/betting-economics methodology itself is
-[`docs/PHASE2_EV_METHODOLOGY.md`](PHASE2_EV_METHODOLOGY.md) (added 2026-07-21,
-methodology only, no code) - synthesizes Phase 0's temporal-movement finding
-and Phase 0.5's cross-bookmaker finding into one retrospective EV test, with
-explicit guardrails against the Max-selection-bias artifact Phase 0.5 already
-caught once and threshold/timestamp cherry-picking.
+[`docs/PHASE2_EV_METHODOLOGY.md`](PHASE2_EV_METHODOLOGY.md) - synthesizes
+Phase 0's temporal-movement finding and Phase 0.5's cross-bookmaker finding
+into one retrospective EV test, with explicit guardrails against the
+Max-selection-bias artifact Phase 0.5 already caught once and threshold/
+timestamp cherry-picking. **Decision-snapshot ingestion is done**: 100%
+coverage on all four decision offsets (T-24h/12h/6h/1h), 24,338 normalized
+rows, zero EV/ROI computed (ingestion only, per scope). Caught and fixed a
+real bug before spending budget: football-data.co.uk's kickoff time is UK
+local (BST-aware), not UTC - see the methodology doc's "Ingestion result"
+section. EV/ROI computation itself is the next, separate PR.
 
 Question:
 
