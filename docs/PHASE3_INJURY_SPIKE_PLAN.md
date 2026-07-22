@@ -84,7 +84,10 @@ look. Revisit only if API-Football is rejected.
   three stop/go questions below, stop and report what's known - do not
   quietly raise the cap mid-spike or reach for "just one more request."
 - **Raw response caching, if used, is never committed** - gitignored, same
-  convention as `data/raw/the_odds_api/` from Phase 2.
+  convention as `data/raw/the_odds_api/` from Phase 2. If the spike report
+  itself (which may land under `docs/`, i.e. committed) quotes an example
+  response, it must be a minimal excerpt showing only the fields relevant to
+  the stop/go questions - not a full raw dump.
 - **Every fetched record preserves `source`, `fetched_at`, and provider
   fixture/player identifiers** - matches `docs/PRD.md` §8's data governance
   standard, applied here for injuries the same way it already was for
