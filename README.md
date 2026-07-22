@@ -19,8 +19,10 @@ the first candidate (The Odds API) has been audited -
 "Result" section has the verdict (**ACCEPT**) and real numbers. The EV/betting-
 economics methodology is
 [`docs/PHASE2_EV_METHODOLOGY.md`](docs/PHASE2_EV_METHODOLOGY.md) - decision-
-snapshot ingestion is done (100% coverage, all 4 decision offsets, zero
-EV/ROI computed); the EV/ROI computation itself is the next PR.
+snapshot ingestion is done (100% coverage, all 4 decision offsets), and the
+EV backtest itself is done too: **result NO EDGE** across all 32 tested
+segments (4 offsets x 2 candidate policies x 4 thresholds). See the
+methodology doc's "EV Backtest result" section for the full table.
 
 ## Requires an API key for the Phase 2 scripts
 

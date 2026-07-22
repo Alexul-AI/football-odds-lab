@@ -195,14 +195,28 @@ UTC would have silently misaligned every BST-period match's decision
 timestamps by exactly one hour. Fixed with a real timezone-aware conversion,
 verified against real data from both sources.
 
-## Next step (separate PR)
+## EV Backtest result (2026-07-21): NO EDGE
 
-`Phase 2 EV Backtest Runner` - implementation. Ingestion is done and doesn't
-need to be repeated or re-scoped; this next PR reads the already-fetched
-normalized dataset and computes EV/ROI/hit-rate for the first time. Same rigor
-standard as every prior implementation PR in this repo: devig correctness
-(reuse existing tested primitives), bookmaker-role-separation enforced in code
-(not just documented here - Pinnacle's close as fair benchmark, a named
-candidate bookmaker or Avg as the offered price, never mixed), threshold
-discipline (report EV>0/1/2/3% as parallel rows, no post-hoc winner), and a
-report that can honestly conclude `NO EDGE`.
+`scripts/run_phase2_ev_backtest.py` reads the already-ingested normalized
+dataset - no new API calls, no network I/O at all. Ran all 4 decision offsets
+x 2 candidate policies (`avg`, `williamhill`) x 4 thresholds (0/1/2/3%) = 32
+segments, every one reported side by side per the threshold-discipline rule
+above.
+
+**Result: NO EDGE.** None of the 32 segments showed a 95% confidence interval
+entirely above zero ROI - point estimates ranged roughly +12% to -22% with
+wide, always-zero-crossing intervals, sample sizes 41-240 bets per segment.
+No systematic pattern by offset, policy, or threshold. Pinnacle never
+appeared as a candidate bookmaker (enforced in code, `PinnacleAsCandidateError`);
+no Max/best-of-many candidate price existed anywhere in the pipeline
+(structurally absent, not just avoided).
+
+**Read together with the rest of this project's history**: this is the third
+null/weak-or-null result out of Phase 0's four hypothesis tests so far (Phase
+0.5 null, Phase 1 WEAK/opening-favorite-dominant, now this) against Phase 0's
+one genuinely positive-and-robust finding (the temporal CLV effect itself,
+which remains not-live-tradeable). Consistent with `PHASE1_CONCLUSION.md`'s
+reading: opening/closing prices in this market look close to efficient once
+look-ahead is removed, and simple cross-bookmaker timing gaps don't appear to
+survive contact with real statistical testing on this one season. One season,
+one league - informative, not yet a final verdict on the whole approach.
