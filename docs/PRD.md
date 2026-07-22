@@ -1,14 +1,23 @@
 # football-odds-lab PRD
 
-Status: v0.3
+Status: v0.4
 Mode: Research Lab first
-Last updated: 2026-07-21
+Last updated: 2026-07-22
 
 > Editorial note (2026-07-21): revised from the original v0.1 draft after review.
 > One item was removed rather than merely deprioritized - see §6 - and a few
 > sections were trimmed for ceremony. v0.3 adds §14, naming a possible future
 > research stream while keeping it explicitly unscoped and outside this
 > collaboration - see §14 for what that means precisely.
+>
+> Editorial note (2026-07-22): v0.4 closes Cycle 1 (Phase 0-2, all odds-only)
+> and formalizes Phase 3 (external signal discovery) - see
+> [`docs/RESEARCH_RESET.md`](RESEARCH_RESET.md) for the full synthesis. §5's
+> phases renumbered: the old Phase 3 (paper journal) is now Phase 4, the old
+> Phase 4 (legal betting) is now Phase 5, making room for the new Phase 3 -
+> this restores §1's original stage ordering (odds research → market movement
+> → external signal research → paper journal → legal betting), which §5 had
+> drifted from.
 
 ## 1. Vision
 
@@ -120,7 +129,7 @@ Possible data domains:
 
 **Data availability caveat**: unlike odds data, there is no free, reliable point-in-time
 archive of news/press coverage going back years. Expect most of this domain to be
-validatable only *prospectively*, by collecting it going forward through the Phase 3
+validatable only *prospectively*, by collecting it going forward through the Phase 4
 paper journal (§5, §9) - not by backtesting against years of historical odds the way
 Phase 0/0.5 did. This is the same wall `ai-trading-agent` hit with its sentiment/insider
 filters (current-state-only APIs, no historical snapshot) - worth stating now so it
@@ -289,7 +298,34 @@ Success criteria:
 - realistic bet-placement rate;
 - no hidden threshold tuning.
 
-### Phase 3: Paper-mode signal journal
+**Phase 0-2 are now complete as a research cycle** - see
+[`docs/RESEARCH_RESET.md`](RESEARCH_RESET.md) (added 2026-07-22) for the
+combined read across all four hypothesis tests, why the odds-only data family
+is reasonably exhausted for now, and the formalized selection bar for Phase 3
+below.
+
+### Phase 3: External signal discovery
+
+Per §1's original vision (stage 3) - the axis this project hasn't tried yet
+is a genuinely new information channel, not a more complex model on the same
+opening/closing odds. Formalized selection criteria and a re-ranked candidate
+shortlist (given Phase 2's NO EDGE result closing out candidate #3 from
+`docs/PHASE2_DATA_SOURCE_SELECTION.md`) are in
+[`docs/RESEARCH_RESET.md`](RESEARCH_RESET.md) - not duplicated here to avoid
+two sources of truth drifting apart.
+
+Question:
+
+> Does a timestamped, historical-or-prospectively-collectible, matchable,
+> legal/ethical external signal (starting with team news/injuries as the
+> current top candidate) add predictive or EV value beyond what opening odds
+> already encode?
+
+No source has been picked for implementation yet - this phase starts with a
+small, cheap verification spike per candidate, same discipline as every prior
+phase's opening move, not a methodology doc or code.
+
+### Phase 4: Paper-mode signal journal
 
 Before any real betting, the system should run in paper mode.
 
@@ -311,7 +347,7 @@ The paper journal must be immutable enough to prevent hindsight editing.
 This is also where most §4.3/§4.4 signals get their real validation, per the data
 availability caveat in §4.3 - prospective collection, not retrospective backtesting.
 
-### Phase 4: Legal betting workflow
+### Phase 5: Legal betting workflow
 
 Only much later.
 

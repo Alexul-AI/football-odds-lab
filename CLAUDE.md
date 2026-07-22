@@ -100,6 +100,23 @@ null/weak результат из четырёх гипотез после Phase
 это) — против одной сильной находки Phase 0 (temporal CLV эффект, но не live-tradeable). Один
 сезон, одна лига — информативно, не финальный вердикт по всему подходу.
 
+**Research reset (2026-07-22): Cycle 1 закрыт, Phase 3 формализован как "external signal
+discovery".** [`docs/RESEARCH_RESET.md`](docs/RESEARCH_RESET.md) — синтез всех четырёх
+гипотез Phase 0-2 (одна семья данных: odds-only). Честное чтение: единственная сильная
+находка (Phase 0, temporal CLV) структурно не live-tradeable; всё, что убрало look-ahead
+(0.5, 1, 2) — null/weak/NO EDGE. Вывод НЕ «проект провалился» — это ровно то, что должен
+делать research lab: последовательно убить слабые идеи, задокументировать честно. **Явно
+НЕ делать дальше**: XGBoost/NN/тюнинг порогов на тех же odds-данных — Phase 1's диагностика
+уже показала, что opening odds кодируют почти весь сигнал в этой feature-семье, более гибкая
+модель на тех же входах почти наверняка просто переупакует тот же сигнал. Следующий шаг —
+Phase 3 (`docs/PRD.md` §5, переномерован в этом PR: старый Phase 3 «paper journal» → Phase 4,
+старый Phase 4 «legal betting» → Phase 5), с формальным критерием отбора источника
+(timestamped, available-before-market-move, historical-или-prospectively-collectible,
+matchable, legal/ethical) и переранжированным списком кандидатов из
+`docs/PHASE2_DATA_SOURCE_SELECTION.md` (injuries/team news теперь primary — старый candidate
+#3, timestamped odds snapshots, уже опробован в Phase 2 и закрыт с NO EDGE). Ничего не выбрано
+для реализации, кода нет — только формализация направления.
+
 **Отвечай пользователю на русском языке всегда**, независимо от языка кода, коммитов или
 документации источников данных.
 
