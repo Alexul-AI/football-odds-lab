@@ -175,14 +175,34 @@ established for Phase 0's per-league table and Phase 1's per-fold table.
 - Any live betting or paper-betting infrastructure.
 - Any recommendation to bet, on any specific match or in general.
 
+## Ingestion result (2026-07-21): 100% coverage, all four offsets
+
+The decision-snapshot ingestion PR (`scripts/run_phase2_decision_snapshot_fetch.py`)
+is done, ahead of the "start with one timestamp" recommendation above - the
+real dry-run estimate (856 unique requests after deduplicating shared kickoff
+slots, 8,560 credits) came in well under the 15,200-credit cap even for all
+four offsets at once, so there was no need to phase it further. Confirmed and
+approved before spending, per this project's standing rule on real financial/
+quota spend.
+
+Result: **100% coverage** on T-24h/T-12h/T-6h/T-1h (380/380 matches each, zero
+missing). 24,338 normalized long-format rows (every bookmaker present, not
+just Pinnacle) written locally. Zero EV/ROI/hit-rate computed - purely
+ingestion, exactly per this doc's scope. Caught one real, significant bug
+along the way, before any budget was spent: football-data.co.uk's kickoff
+`Time` column is UK local time (BST-aware), not UTC - naively treating it as
+UTC would have silently misaligned every BST-period match's decision
+timestamps by exactly one hour. Fixed with a real timezone-aware conversion,
+verified against real data from both sources.
+
 ## Next step (separate PR)
 
-`Phase 2 EV Backtest Runner` - implementation, starting with the single
-`T-6h` decision timestamp per the budget recommendation above. Same rigor
-standard as every prior implementation PR in this repo: timestamp-leakage
-tests (nearest-snapshot-rule correctness), devig correctness (reuse existing
-tested primitives), bookmaker-role-separation enforced in code (not just
-documented here), no circular same-source logic, a real request budget cap
-enforced in code (same pattern as `RequestBudget` in
-`scripts/run_phase2_source_spike.py`), and a report that can honestly
-conclude `NO EDGE`.
+`Phase 2 EV Backtest Runner` - implementation. Ingestion is done and doesn't
+need to be repeated or re-scoped; this next PR reads the already-fetched
+normalized dataset and computes EV/ROI/hit-rate for the first time. Same rigor
+standard as every prior implementation PR in this repo: devig correctness
+(reuse existing tested primitives), bookmaker-role-separation enforced in code
+(not just documented here - Pinnacle's close as fair benchmark, a named
+candidate bookmaker or Avg as the offered price, never mixed), threshold
+discipline (report EV>0/1/2/3% as parallel rows, no post-hoc winner), and a
+report that can honestly conclude `NO EDGE`.

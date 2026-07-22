@@ -48,6 +48,26 @@ def parse_match_dates(date_series: pd.Series) -> pd.Series:
     return pd.to_datetime(date_series, dayfirst=True, format="mixed")
 
 
+def parse_kickoff_datetimes_utc(date_series: pd.Series, time_series: pd.Series) -> pd.Series:
+    """football-data.co.uk's Time column is UK LOCAL time (Europe/London,
+    BST-aware), NOT UTC - confirmed empirically 2026-07-21 by comparing a real
+    BST-period match's local kickoff (19:30) against The Odds API's UTC
+    commence_time for the same match (18:30Z = 19:30 BST). Combining Date+Time
+    naively as if it were already UTC would silently misalign every BST-period
+    match (roughly late March through late October) by exactly one hour -
+    this uses a real Europe/London timezone conversion so the DST transition
+    dates (which shift slightly year to year) are handled correctly rather
+    than hardcoded.
+    """
+    naive = pd.to_datetime(
+        date_series.astype(str) + " " + time_series.fillna("15:00").astype(str),
+        dayfirst=True,
+        format="mixed",
+    )
+    london = naive.dt.tz_localize("Europe/London", ambiguous="NaT", nonexistent="NaT")
+    return london.dt.tz_convert("UTC")
+
+
 def _days_since(previous_date: pd.Timestamp | None, current_date: pd.Timestamp) -> float | None:
     if previous_date is None:
         return None
