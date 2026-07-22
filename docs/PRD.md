@@ -323,7 +323,10 @@ Question:
 
 No source has been picked for implementation yet - this phase starts with a
 small, cheap verification spike per candidate, same discipline as every prior
-phase's opening move, not a methodology doc or code.
+phase's opening move, not a methodology doc or code. The audit plan for the
+first candidate (team news/injuries via API-Football) is
+[`docs/PHASE3_INJURY_SPIKE_PLAN.md`](PHASE3_INJURY_SPIKE_PLAN.md) - plan
+only, no key obtained, no data fetched yet.
 
 ### Phase 4: Paper-mode signal journal
 
