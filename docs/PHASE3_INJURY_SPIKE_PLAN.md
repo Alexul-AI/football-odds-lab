@@ -1,6 +1,6 @@
 # Phase 3 Injury Spike Plan
 
-Status: plan only - no code, no API key obtained, no data fetched yet
+Status: spike complete - result: REJECT-FOR-BACKTEST-BUT-VIABLE-FOR-PAPER-JOURNAL
 Last updated: 2026-07-22
 
 ## Purpose
@@ -158,3 +158,46 @@ A single spike report (`docs/PHASE3_INJURY_SPIKE_REPORT.md` or under
 - Lineups, press-conference, or social-signal candidates - separate
   candidates per `docs/RESEARCH_RESET.md`'s shortlist, not this spike.
 - Any player-family or personal-circle data, in any form.
+
+## Result (2026-07-22): REJECT-FOR-BACKTEST-BUT-VIABLE-FOR-PAPER-JOURNAL
+
+Real run against the live API, free tier, 2 of the 20-request budget used:
+
+- **Question 1 (historical coverage): PASS.** `/leagues?id=39` confirmed
+  season 2023 (2023-24) has `coverage.injuries=True`. (The most recent
+  tracked season, 2026, showed `coverage.injuries=False` - not blocking,
+  since question 1 already passed on the target season, but a reminder that
+  a "most recent season" check alone isn't a reliable prospective-viability
+  signal on its own.)
+- **Question 2 (usable publication/update timestamp): FAIL.** One broad
+  `/injuries?league=39&season=2023` call returned 3,853 real records. Every
+  record's only date/time field is `fixture.date`/`fixture.timestamp` - the
+  date of the match itself, not a "reported at" or "updated at" field. No
+  field anywhere in the schema indicates when the record was created or
+  when the information became public. Read structurally, this looks like a
+  **matchday absence report** (who ended up missing this specific game),
+  not a point-in-time injury-news feed - the same timing-risk profile
+  `docs/PHASE2_DATA_SOURCE_SELECTION.md` already flagged for the lineups
+  candidate, not the "news breaks days ahead" profile this hypothesis
+  needed. Whether records actually populate well before kickoff or only at/
+  near it is genuinely unknown from a *past* season's data (already fully
+  populated by query time) - that open question needs a separate,
+  forward-looking check (watch an upcoming fixture's record over several
+  days before its kickoff) before this source could be called settled even
+  for Phase 4's paper journal.
+- **Question 3 (entity resolution): not reached as a real blocker.** 16/20
+  team names matched the existing `E0_TEAM_NAME_MAP` values directly; the 4
+  misses (`Manchester City`/`Manchester United`/`Nottingham Forest`/
+  `Sheffield Utd`) are just API-Football's different abbreviation
+  convention, trivially fixable with a dedicated name map if this source
+  were ever adopted.
+
+**Read this as the stop/go design working exactly as intended, not as a
+dead end.** Per the user's own framing when this plan was approved: this is
+"a normal result, not a dead end." Team news/injuries is closed for Phase 3
+retrospective backtesting under this specific provider/endpoint - the
+central, correctly-anticipated leakage risk (no way to know what was
+knowable at a pre-match decision timestamp) is real, confirmed against a
+real response, not assumed. Full data-level report:
+`reports/phase3-injury-spike-report.md` (gitignored, local only, same
+convention as every other phase's report).

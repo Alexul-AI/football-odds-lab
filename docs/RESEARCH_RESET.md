@@ -116,11 +116,19 @@ was this cycle's actual pick - it's now a *tried, closed* candidate (NO
 EDGE), not an open one. That promotes its own original secondary
 recommendation:
 
-1. **Team news / injuries / suspensions** (was candidate #1) - strongest
-   classical signal-value story of the group. The real open risk flagged at
-   the time - per-league-per-season historical coverage on API-Football,
-   never actually verified against a real response - is still open, and is
-   the natural next verification spike, not a new candidate to invent.
+1. ~~**Team news / injuries / suspensions** (was candidate #1)~~ - **spike
+   run, closed 2026-07-22**: `docs/PHASE3_INJURY_SPIKE_PLAN.md`'s "Result"
+   section. API-Football's `/injuries` endpoint has real EPL 2023-24
+   coverage (3,853 records, 1 request), but every record's only date field
+   is the match's own `fixture.date` - not a publication/update timestamp.
+   Reads structurally as a matchday absence report, not a point-in-time
+   news feed - the same timing-risk profile already flagged for candidate
+   #2 (lineups) below, not what this candidate's original hypothesis
+   needed. **Verdict: reject-for-backtest, not yet confirmed even for
+   Phase 4's paper journal** (that needs its own small forward-looking
+   check - does a record populate before its own fixture's kickoff, or
+   only at/near it). Promotes exchange liquidity to the top *open*
+   candidate.
 2. **Exchange liquidity / order-book depth** (new framing, not previously
    evaluated on its own) - Betfair's Historical Data service was already
    scoped once as an alternative timestamped-*price* source in candidate #3's

@@ -323,10 +323,15 @@ Question:
 
 No source has been picked for implementation yet - this phase starts with a
 small, cheap verification spike per candidate, same discipline as every prior
-phase's opening move, not a methodology doc or code. The audit plan for the
-first candidate (team news/injuries via API-Football) is
-[`docs/PHASE3_INJURY_SPIKE_PLAN.md`](PHASE3_INJURY_SPIKE_PLAN.md) - plan
-only, no key obtained, no data fetched yet.
+phase's opening move, not a methodology doc or code. The first candidate
+(team news/injuries via API-Football) has been audited -
+[`docs/PHASE3_INJURY_SPIKE_PLAN.md`](PHASE3_INJURY_SPIKE_PLAN.md)'s "Result"
+section has the verdict (**reject-for-backtest-but-viable-for-paper-
+journal**) and real numbers: historical coverage exists, but every injury
+record's only date field is the match's own fixture date, not a publication/
+update timestamp - confirmed against a real response, 2 of a 20-request
+budget. Exchange liquidity/order-book depth (candidate #2 in
+`docs/RESEARCH_RESET.md`) is now the top open candidate.
 
 ### Phase 4: Paper-mode signal journal
 

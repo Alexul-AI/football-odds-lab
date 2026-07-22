@@ -65,10 +65,17 @@ Four research passes so far, all on odds-only data:
 
 Read together, this is a research cycle that did what it's supposed to do -
 kill weak ideas cleanly - not a project that failed. Phase 3 (external signal
-discovery) is formalized but not yet started; see `docs/RESEARCH_RESET.md`
-for the selection criteria and candidate shortlist. See the methodology docs
-before drawing conclusions from any of these - the honest limitations matter
-as much as the headline numbers.
+discovery) is underway; see `docs/RESEARCH_RESET.md` for the selection
+criteria and candidate shortlist. The first candidate (team news/injuries via
+API-Football) has already been audited and closed -
+[`docs/PHASE3_INJURY_SPIKE_PLAN.md`](docs/PHASE3_INJURY_SPIKE_PLAN.md)'s
+"Result" section: verdict **reject-for-backtest-but-viable-for-paper-journal**
+- real EPL 2023-24 coverage exists, but every injury record's only date field
+is the match's own fixture date, not a publication/update timestamp, so it's
+rejected for retrospective backtesting (not yet confirmed even for the paper
+journal). See the methodology docs before drawing
+conclusions from any of these - the honest limitations matter as much as the
+headline numbers.
 
 ## Setup
 
