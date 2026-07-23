@@ -106,5 +106,13 @@ table (pooled + both windows) with `devig_shin` instead of
 verdict.** Point estimates shifted (Window B moved from -27.03% to
 -15.02%, for example) but every segment's significance verdict stayed
 "no" under both methods - the devig method choice was not hiding a real
-edge in this data. Full comparison table in the robustness-check report
-(gitignored, local only, same convention as every other phase's report).
+edge in this data.
+
+| Segment | proportional (original) | shin |
+|---|---|---|
+| Overall (pooled) | 418 bets, ROI -2.43%, 95% CI [-22.57%, +17.70%], p=0.8124, significant=no | 313 bets, ROI -3.37%, 95% CI [-18.97%, +12.23%], p=0.6711, significant=no |
+| Window A (seasons < 2023) | 255 bets, ROI +13.29%, 95% CI [-14.31%, +40.89%], p=0.3439, significant=no | 188 bets, ROI +4.37%, 95% CI [-15.96%, +24.71%], p=0.6720, significant=no |
+| Window B (seasons >= 2023) | 163 bets, ROI -27.03%, 95% CI [-55.28%, +1.22%], p=0.0606, significant=no | 125 bets, ROI -15.02%, 95% CI [-39.52%, +9.49%], p=0.2274, significant=no |
+
+Reproducible locally via `python scripts/run_shin_devig_robustness_check.py`
+(re-generates the same numbers from cached data, no network calls needed).

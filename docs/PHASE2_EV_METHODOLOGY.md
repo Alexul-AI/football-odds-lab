@@ -238,6 +238,42 @@ verdict.** Point estimates shifted, sometimes substantially and toward more
 positive ROI (e.g. T-1h/williamhill/1%: -11.20% -> +24.36%), but **not one
 of the 32 segments' significance verdict flipped** - every 95% CI still
 crosses zero under Shin's method, same as under proportional. The devig
-method choice was not hiding a real edge in this data. Full 32-row
-comparison table in the robustness-check report (gitignored, local only,
-same convention as every other phase's report).
+method choice was not hiding a real edge in this data.
+
+| Offset | Policy | Threshold | proportional ROI [95% CI] | shin ROI [95% CI] | Significance changed? |
+|---|---|---|---|---|---|
+| T-24h | avg | 0% | +6.29% [-13.42%, +26.01%] | +9.09% [-8.41%, +26.59%] | no |
+| T-24h | avg | 1% | +4.95% [-16.36%, +26.26%] | +5.96% [-13.69%, +25.61%] | no |
+| T-24h | avg | 2% | -1.43% [-25.09%, +22.23%] | +7.28% [-14.89%, +29.45%] | no |
+| T-24h | avg | 3% | +1.89% [-26.02%, +29.80%] | +14.49% [-11.32%, +40.30%] | no |
+| T-24h | williamhill | 0% | +12.11% [-12.45%, +36.68%] | +19.24% [-5.29%, +43.77%] | no |
+| T-24h | williamhill | 1% | +11.20% [-16.11%, +38.52%] | +18.03% [-8.84%, +44.90%] | no |
+| T-24h | williamhill | 2% | -2.57% [-32.81%, +27.66%] | +15.57% [-16.80%, +47.94%] | no |
+| T-24h | williamhill | 3% | +8.78% [-29.04%, +46.60%] | +11.21% [-21.39%, +43.81%] | no |
+| T-12h | avg | 0% | +8.82% [-11.27%, +28.92%] | +10.14% [-8.72%, +29.01%] | no |
+| T-12h | avg | 1% | +10.21% [-12.55%, +32.98%] | +11.18% [-10.86%, +33.21%] | no |
+| T-12h | avg | 2% | +10.84% [-15.40%, +37.09%] | +24.36% [-1.83%, +50.56%] | no |
+| T-12h | avg | 3% | +9.15% [-19.66%, +37.95%] | +22.99% [-6.76%, +52.73%] | no |
+| T-12h | williamhill | 0% | +7.26% [-17.75%, +32.27%] | +15.62% [-9.52%, +40.76%] | no |
+| T-12h | williamhill | 1% | +1.46% [-26.41%, +29.32%] | +2.48% [-24.21%, +29.17%] | no |
+| T-12h | williamhill | 2% | -4.56% [-34.98%, +25.86%] | +16.36% [-17.57%, +50.29%] | no |
+| T-12h | williamhill | 3% | +2.95% [-33.17%, +39.07%] | +19.94% [-19.14%, +59.01%] | no |
+| T-6h | avg | 0% | +4.37% [-16.03%, +24.77%] | +10.16% [-7.84%, +28.15%] | no |
+| T-6h | avg | 1% | +2.94% [-20.64%, +26.51%] | +9.90% [-11.21%, +31.01%] | no |
+| T-6h | avg | 2% | +3.92% [-22.98%, +30.81%] | +6.05% [-17.36%, +29.45%] | no |
+| T-6h | avg | 3% | +8.18% [-26.26%, +42.61%] | +13.24% [-14.39%, +40.87%] | no |
+| T-6h | williamhill | 0% | +6.56% [-17.75%, +30.86%] | +13.79% [-9.99%, +37.56%] | no |
+| T-6h | williamhill | 1% | +4.14% [-25.48%, +33.76%] | +9.65% [-17.24%, +36.54%] | no |
+| T-6h | williamhill | 2% | -4.91% [-37.24%, +27.42%] | +10.43% [-24.60%, +45.47%] | no |
+| T-6h | williamhill | 3% | -1.46% [-39.80%, +36.88%] | +7.36% [-25.54%, +40.26%] | no |
+| T-1h | avg | 0% | -3.64% [-25.83%, +18.55%] | +14.85% [-5.63%, +35.33%] | no |
+| T-1h | avg | 1% | -7.28% [-32.87%, +18.31%] | +21.25% [-5.79%, +48.29%] | no |
+| T-1h | avg | 2% | -16.80% [-47.07%, +13.46%] | +8.71% [-25.68%, +43.10%] | no |
+| T-1h | avg | 3% | -17.12% [-55.03%, +20.79%] | +11.75% [-30.04%, +53.53%] | no |
+| T-1h | williamhill | 0% | +9.77% [-17.51%, +37.06%] | +22.80% [-4.57%, +50.17%] | no |
+| T-1h | williamhill | 1% | -11.20% [-40.83%, +18.43%] | +24.36% [-9.09%, +57.80%] | no |
+| T-1h | williamhill | 2% | -22.27% [-54.63%, +10.08%] | +11.58% [-26.96%, +50.12%] | no |
+| T-1h | williamhill | 3% | -7.22% [-53.00%, +38.56%] | +12.03% [-35.65%, +59.70%] | no |
+
+Reproducible locally via `python scripts/run_shin_devig_robustness_check.py`
+(re-generates the same numbers from cached data, no network calls needed).
