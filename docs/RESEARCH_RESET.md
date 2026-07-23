@@ -1,7 +1,7 @@
 # Research Reset: End of Cycle 1 (Odds-Only Research)
 
 Status: reset checkpoint - synthesizes closed work, does not open new work
-Last updated: 2026-07-22
+Last updated: 2026-07-23
 
 ## Why this document exists
 
@@ -72,8 +72,8 @@ model could find in this feature family, so a more flexible model on the same
 inputs is very likely to just be a better-fit repackaging of the same
 opening-odds signal, not new information. `docs/PRD.md` §1's original vision
 already separates "market movement research" (stages 1-2, now closed for this
-cycle) from "external signal research" (stage 3, not yet started) - that's
-the axis this project hasn't tried, not model complexity.
+cycle) from "external signal research" (stage 3) - that's the axis worth
+trying a genuinely new information channel on, not model complexity.
 
 ## Phase 3: External Signal Discovery (formalized)
 
@@ -167,12 +167,19 @@ mechanically working down the list.
 ### What this section does not do
 
 Does not pick a final Phase 3 source, does not commit any spend, does not
-write a methodology doc, does not write code. The next concrete step, if and
-when picked up, is the same shape as every prior phase's opening move: a
-small, cheap verification spike (a handful of real API calls) confirming
-whether the injury-coverage historical-depth question is actually real,
-before any design work - exactly what `PHASE2_DATA_SOURCE_SELECTION.md`
-already recommended before this reset.
+write a methodology doc, does not write code.
+
+**Update (2026-07-23): both candidates named above have since been spiked
+and closed** - see
+[`PHASE3_INJURY_SPIKE_PLAN.md`](PHASE3_INJURY_SPIKE_PLAN.md)'s Result
+(reject-for-backtest) and
+[`PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md)'s
+Result (reject-jurisdiction). No next Phase 3 source has been selected -
+this is a deliberate pause, not an oversight, per this document's own
+"worth pausing to decide deliberately" framing above. Picking up candidate
+#3 (lower-tier/cup broadening) or opening a genuinely new-infrastructure
+direction (Phase 4-style, per `README.md`'s "Why stop here") are both live
+options, not decided by this document.
 
 ## What does not change
 
