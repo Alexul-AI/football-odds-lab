@@ -129,13 +129,18 @@ recommendation:
    check - does a record populate before its own fixture's kickoff, or
    only at/near it). Promotes exchange liquidity to the top *open*
    candidate.
-2. **Exchange liquidity / order-book depth** (new framing, not previously
-   evaluated on its own) - Betfair's Historical Data service was already
+2. **Exchange liquidity / order-book depth** - **plan written 2026-07-22**,
+   [`docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md),
+   no account or data yet. Betfair's Historical Data service was already
    scoped once as an alternative timestamped-*price* source in candidate #3's
    writeup, but it also exposes traded volume/liquidity - a genuinely
-   different signal type than a fixed-odds price series. Worth its own small
-   evaluation against the five-point bar above, not assumed to inherit
-   candidate #3's NO EDGE result just because it shares a provider family.
+   different signal type than a fixed-odds price series. Real research
+   before writing the plan found a structural wrinkle: the free Basic tier
+   has no volume/depth at all (documented), only the paid Advanced/Pro tiers
+   do - so confirming this candidate's actual hypothesis needs a real
+   purchase decision, deliberately split into its own later stage rather
+   than bundled into the free audit. Not assumed to inherit candidate #3's
+   NO EDGE result just because it shares a provider family.
 3. **Lower-tier / cup / non-league fixture broadening** (cheap, safe path) -
    not a new signal type, a broader universe where markets may be less
    efficient. Honest framing: this tests a different axis (market efficiency

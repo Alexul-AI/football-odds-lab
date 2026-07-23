@@ -139,6 +139,25 @@ timing-risk профиль, что уже был помечен для lineups (
 не тупик — источник закрыт для Phase 3 retrospective backtest под этим провайдером,
 exchange liquidity (Betfair) теперь top open candidate в `docs/RESEARCH_RESET.md`.
 
+**Phase 3 Betfair exchange spike — план зафиксирован, аккаунта и данных ещё нет
+(2026-07-22).** [`docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md) —
+источник другого типа риска, чем предыдущие два: не «ещё одна цена», а market
+microstructure (объём, spread, order-book depth). Реальная находка ДО написания плана:
+free (Basic) tier по документации Betfair **вообще не содержит volume/liquidity** —
+только last-traded-price раз в минуту, без полного price ladder; настоящий order-book
+depth (до 3 уровней back/lay) есть только в платных Advanced/Pro tier, цена которых пока
+не подтверждена. План поэтому разбит на **Stage A** (бесплатный аудит: pre-match
+timestamped snapshots, entity matching, ToS, эмпирическая проверка того, что реально
+содержит free tier — в этом PR) и **Stage B** (решение о покупке платного tier для
+проверки liquidity — отдельный будущий гейт, требует явного одобрения и оплаты
+пользователем, не бандлится в этот спайк). **Отдельная граница, специфичная для этого
+источника**: Betfair — реальная букмекерская биржа, а не чистый stats API; аккаунт для
+Historical Data технически имеет доступ и к live betting API. План явно фиксирует:
+используется только read-only Historical Data API, никогда betting/order-placement
+endpoints, ни при каких обстоятельствах — существование аккаунта не создаёт исключения
+из правила «никогда не размещать ставки». Регистрация аккаунта — действие пользователя,
+не моё, вдвойне сильнее обычного правила именно из-за типа аккаунта.
+
 **Отвечай пользователю на русском языке всегда**, независимо от языка кода, коммитов или
 документации источников данных.
 
