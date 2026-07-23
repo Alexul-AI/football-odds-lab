@@ -86,3 +86,25 @@ side by side, not merged into one verdict.
   reference," which is what both Phase 0 and Phase 0.5 have tested so far.
 - **Does not test**: markets other than 1X2 (over/under, Asian handicap columns exist
   in the same files, untested).
+
+## Robustness check (2026-07-23): Shin's method devig
+
+An external review correctly flagged that `odds_math.devig_multiplicative`
+(proportional devig, used throughout this test) doesn't correct for the
+favorite-longshot bias the way Shin's method does - a real gap, but already
+documented in the function's own docstring before the review, not a new
+finding. That review's own suggested Shin's-method code was independently
+verified against the primary source (Cain, Law & Peel's closed-form
+inversion of Shin (1992), reproduced in Whelan (2024)) and found to have a
+real bug (missing the `pi_i^2/B` term) - fixed properly in
+`odds_math.devig_shin`, with hand-derived tests confirming it against the
+correct formula, not the reviewed one.
+
+`scripts/run_shin_devig_robustness_check.py` re-ran this test's `Avg`
+table (pooled + both windows) with `devig_shin` instead of
+`devig_multiplicative`, side by side. **Result: no change to the null
+verdict.** Point estimates shifted (Window B moved from -27.03% to
+-15.02%, for example) but every segment's significance verdict stayed
+"no" under both methods - the devig method choice was not hiding a real
+edge in this data. Full comparison table in the robustness-check report
+(gitignored, local only, same convention as every other phase's report).

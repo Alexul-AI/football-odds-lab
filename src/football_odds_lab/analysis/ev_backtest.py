@@ -15,7 +15,8 @@ import pandas as pd
 
 from football_odds_lab.analysis.betting_stats import HypothesisTestResult, summarize_bets
 from football_odds_lab.analysis.ev_candidate_price import resolve_avg_odds, resolve_named_bookmaker_odds
-from football_odds_lab.analysis.value_betting_hypothesis import ValueBet, select_value_bet
+from football_odds_lab.analysis.odds_math import devig_multiplicative
+from football_odds_lab.analysis.value_betting_hypothesis import DevigFn, ValueBet, select_value_bet
 
 AVG_POLICY = "avg"
 
@@ -45,10 +46,15 @@ def run_ev_backtest_segment(
     offset_hours: int,
     candidate_policy: str,
     threshold: float,
+    devig_fn: DevigFn = devig_multiplicative,
 ) -> EVBacktestSegment:
     """football_data_df must have HomeTeam/AwayTeam/PSCH/PSCD/PSCA/FTR.
     decision_snapshots_df is the normalized long-format dataset from
-    scripts/run_phase2_decision_snapshot_fetch.py."""
+    scripts/run_phase2_decision_snapshot_fetch.py.
+
+    devig_fn defaults to devig_multiplicative (Phase 2's original, still-
+    canonical result, unchanged). Passing odds_math.devig_shin instead re-
+    runs this segment as a favorite-longshot-bias-corrected robustness check."""
     offset_snapshots = decision_snapshots_df[decision_snapshots_df["decision_offset_hours"] == offset_hours]
 
     bets: list[ValueBet] = []
@@ -69,7 +75,9 @@ def run_ev_backtest_segment(
             excluded_missing_candidate += 1
             continue
 
-        bet = select_value_bet(fair_odds, candidate_odds, actual_result=row.FTR, min_edge=threshold)
+        bet = select_value_bet(
+            fair_odds, candidate_odds, actual_result=row.FTR, min_edge=threshold, devig_fn=devig_fn
+        )
         if bet is not None:
             bets.append(bet)
 

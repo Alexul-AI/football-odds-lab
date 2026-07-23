@@ -15,9 +15,12 @@ match entirely if no outcome clears EV > 0. Zero is the natural break-even point
 not a tuned threshold.
 """
 
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
 from football_odds_lab.analysis.odds_math import OUTCOMES, devig_multiplicative
+
+DevigFn = Callable[[Sequence[float]], list[float]]
 
 
 def compute_edge(fair_devigged_prob: float, market_odds: float) -> float:
@@ -40,12 +43,20 @@ def select_value_bet(
     actual_result: str,
     stake: float = 1.0,
     min_edge: float = 0.0,
+    devig_fn: DevigFn = devig_multiplicative,
 ) -> ValueBet | None:
     """min_edge defaults to 0.0 (Phase 0.5's original behavior, unchanged) - a
     higher value implements a minimum-edge threshold (see Phase 2's EV
     methodology, docs/PHASE2_EV_METHODOLOGY.md's threshold-sweep requirement)
-    without duplicating this selection logic in a second function."""
-    fair_probs = dict(zip(OUTCOMES, devig_multiplicative([fair_odds[o] for o in OUTCOMES])))
+    without duplicating this selection logic in a second function.
+
+    devig_fn defaults to devig_multiplicative (proportional - every phase's
+    original, still-canonical behavior, unchanged). Passing
+    odds_math.devig_shin instead re-derives the fair probabilities correcting
+    for favorite-longshot bias - see the Shin's-method robustness-check
+    script/report for what changes and what doesn't when this is swapped in.
+    """
+    fair_probs = dict(zip(OUTCOMES, devig_fn([fair_odds[o] for o in OUTCOMES])))
     edges = {o: compute_edge(fair_probs[o], market_odds[o]) for o in OUTCOMES}
 
     best_side = max(edges, key=edges.get)

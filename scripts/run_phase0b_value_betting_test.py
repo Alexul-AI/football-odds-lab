@@ -28,8 +28,8 @@ from pathlib import Path
 import pandas as pd
 
 from football_odds_lab.analysis.betting_stats import HypothesisTestResult, summarize_bets
-from football_odds_lab.analysis.odds_math import overround
-from football_odds_lab.analysis.value_betting_hypothesis import ValueBet, select_value_bet
+from football_odds_lab.analysis.odds_math import devig_multiplicative, overround
+from football_odds_lab.analysis.value_betting_hypothesis import DevigFn, ValueBet, select_value_bet
 from football_odds_lab.data_sources.football_data_co_uk import EARLIEST_SEASON_START_YEAR, LEAGUES, download_all
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -58,13 +58,19 @@ def load_dataset(cache_dir: Path) -> pd.DataFrame:
     return df
 
 
-def run_bets(df: pd.DataFrame, market_columns: tuple[str, str, str]) -> list[ValueBet | None]:
+def run_bets(
+    df: pd.DataFrame, market_columns: tuple[str, str, str], devig_fn: DevigFn = devig_multiplicative
+) -> list[ValueBet | None]:
+    """devig_fn defaults to devig_multiplicative (this script's original,
+    still-canonical behavior, unchanged). Passing odds_math.devig_shin
+    instead re-runs this exact test as a favorite-longshot-bias-corrected
+    robustness check - see scripts/run_shin_devig_robustness_check.py."""
     h_col, d_col, a_col = market_columns
     bets: list[ValueBet | None] = []
     for row in df.itertuples(index=False):
         fair_odds = {"H": row.PSCH, "D": row.PSCD, "A": row.PSCA}
         market_odds = {"H": getattr(row, h_col), "D": getattr(row, d_col), "A": getattr(row, a_col)}
-        bets.append(select_value_bet(fair_odds, market_odds, actual_result=row.FTR))
+        bets.append(select_value_bet(fair_odds, market_odds, actual_result=row.FTR, devig_fn=devig_fn))
     return bets
 
 
