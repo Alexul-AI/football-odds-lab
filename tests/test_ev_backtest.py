@@ -5,6 +5,7 @@ import pytest
 
 from football_odds_lab.analysis.ev_backtest import run_ev_backtest_segment
 from football_odds_lab.analysis.ev_candidate_price import PinnacleAsCandidateError
+from football_odds_lab.analysis.odds_math import devig_multiplicative, devig_shin
 
 
 def _football_data_df() -> pd.DataFrame:
@@ -89,3 +90,36 @@ def test_run_ev_backtest_segment_missing_candidate_book_excludes_not_crashes():
     assert segment.excluded_missing_candidate == 2
     assert segment.n_bets_placed == 0
     assert segment.result is None
+
+
+def test_run_ev_backtest_segment_default_devig_fn_matches_explicit_multiplicative():
+    default_segment = run_ev_backtest_segment(
+        _decision_snapshots_df(), _football_data_df(), offset_hours=6, candidate_policy="williamhill", threshold=0.0
+    )
+    explicit_segment = run_ev_backtest_segment(
+        _decision_snapshots_df(),
+        _football_data_df(),
+        offset_hours=6,
+        candidate_policy="williamhill",
+        threshold=0.0,
+        devig_fn=devig_multiplicative,
+    )
+    assert default_segment.n_bets_placed == explicit_segment.n_bets_placed
+    assert math.isclose(default_segment.result.total_profit, explicit_segment.result.total_profit, abs_tol=1e-9)
+
+
+def test_run_ev_backtest_segment_honors_devig_shin():
+    segment = run_ev_backtest_segment(
+        _decision_snapshots_df(),
+        _football_data_df(),
+        offset_hours=6,
+        candidate_policy="williamhill",
+        threshold=0.0,
+        devig_fn=devig_shin,
+    )
+    # Same bet still clears (Arsenal vs Chelsea, williamhill's generous Home
+    # price) - Shin's method shouldn't change which bet is placed here, but
+    # this confirms it runs end-to-end through the real orchestration path,
+    # not just the pure devig function in isolation.
+    assert segment.n_bets_placed == 1
+    assert segment.result is not None

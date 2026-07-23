@@ -1,5 +1,6 @@
 import math
 
+from football_odds_lab.analysis.odds_math import devig_multiplicative, devig_shin
 from football_odds_lab.analysis.value_betting_hypothesis import compute_edge, select_value_bet
 
 
@@ -75,3 +76,31 @@ def test_select_value_bet_respects_higher_min_edge_threshold():
 
     assert select_value_bet(fair_odds, market_odds, actual_result="H", min_edge=0.05) is not None
     assert select_value_bet(fair_odds, market_odds, actual_result="H", min_edge=0.15) is None
+
+
+def test_select_value_bet_default_devig_fn_is_multiplicative_unchanged_behavior():
+    # Adding devig_fn must not change Phase 0.5's original results by default.
+    fair_odds = {"H": 2.10, "D": 3.60, "A": 3.60}
+    market_odds = {"H": 2.40, "D": 3.50, "A": 3.40}
+
+    default_bet = select_value_bet(fair_odds, market_odds, actual_result="H")
+    explicit_bet = select_value_bet(
+        fair_odds, market_odds, actual_result="H", devig_fn=devig_multiplicative
+    )
+    assert default_bet.edge == explicit_bet.edge
+
+
+def test_select_value_bet_honors_devig_shin_and_gives_a_different_edge():
+    # Passing devig_shin must actually change which fair probabilities get used -
+    # not silently fall back to the default. H is the favorite here (2.10 vs
+    # 3.60/3.60), so Shin's method should raise its fair probability relative to
+    # proportional, changing the computed edge.
+    fair_odds = {"H": 2.10, "D": 3.60, "A": 3.60}
+    market_odds = {"H": 2.40, "D": 3.50, "A": 3.40}
+
+    proportional_bet = select_value_bet(fair_odds, market_odds, actual_result="H")
+    shin_bet = select_value_bet(fair_odds, market_odds, actual_result="H", devig_fn=devig_shin)
+
+    assert shin_bet is not None
+    assert shin_bet.side == "H"
+    assert shin_bet.edge != proportional_bet.edge
