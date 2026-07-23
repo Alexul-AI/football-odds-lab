@@ -6,9 +6,11 @@ Last updated: 2026-07-23
 ## Purpose
 
 Per `docs/RESEARCH_RESET.md`'s re-ranked Phase 3 candidate shortlist:
-exchange liquidity/order-book depth (Betfair) is now the top open candidate,
-since team news/injuries (the prior top candidate) was audited and closed
-(`docs/PHASE3_INJURY_SPIKE_PLAN.md`, reject-for-backtest). This is a
+exchange liquidity/order-book depth (Betfair) was the top open candidate
+when this plan was written, since team news/injuries (the prior top
+candidate) was audited and closed (`docs/PHASE3_INJURY_SPIKE_PLAN.md`,
+reject-for-backtest) - before the jurisdiction-access result below closed
+this candidate too. This is a
 genuinely different risk profile than either prior spike (The Odds API,
 API-Football): not "another price series from another book," but market
 *microstructure* - volume, spread, available liquidity, order-book depth.

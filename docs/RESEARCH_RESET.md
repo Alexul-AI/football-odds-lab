@@ -127,8 +127,8 @@ recommendation:
    needed. **Verdict: reject-for-backtest, not yet confirmed even for
    Phase 4's paper journal** (that needs its own small forward-looking
    check - does a record populate before its own fixture's kickoff, or
-   only at/near it). Promotes exchange liquidity to the top *open*
-   candidate.
+   only at/near it). It originally promoted exchange liquidity to the top
+   *open* candidate; that candidate has since also been closed below.
 2. ~~**Exchange liquidity / order-book depth**~~ - **spike blocked before
    Stage A even started, closed 2026-07-23**:
    [`docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md)'s
