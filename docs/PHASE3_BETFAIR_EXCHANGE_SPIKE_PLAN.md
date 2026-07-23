@@ -1,14 +1,16 @@
 # Phase 3 Betfair Exchange Spike Plan
 
-Status: plan only - no code, no Betfair account, no data fetched yet
-Last updated: 2026-07-22
+Status: spike blocked before Stage A - result: REJECT (jurisdiction access)
+Last updated: 2026-07-23
 
 ## Purpose
 
 Per `docs/RESEARCH_RESET.md`'s re-ranked Phase 3 candidate shortlist:
-exchange liquidity/order-book depth (Betfair) is now the top open candidate,
-since team news/injuries (the prior top candidate) was audited and closed
-(`docs/PHASE3_INJURY_SPIKE_PLAN.md`, reject-for-backtest). This is a
+exchange liquidity/order-book depth (Betfair) was the top open candidate
+when this plan was written, since team news/injuries (the prior top
+candidate) was audited and closed (`docs/PHASE3_INJURY_SPIKE_PLAN.md`,
+reject-for-backtest) - before the jurisdiction-access result below closed
+this candidate too. This is a
 genuinely different risk profile than either prior spike (The Odds API,
 API-Football): not "another price series from another book," but market
 *microstructure* - volume, spread, available liquidity, order-book depth.
@@ -219,3 +221,46 @@ or under `reports/`, TBD at implementation time) covering:
   this document first.
 - Any model, backtest, or EV/ROI computation.
 - Any player-family, social, or personal-circle data, in any form.
+
+## Result (2026-07-23): REJECT - blocked before Stage A even started
+
+This spike never reached its actual audit questions. The user attempted to
+access `betfair.com` (the required first step - a Betfair account is a
+prerequisite for Historical Data access, per this plan's own scope) from
+their real network and got an explicit geographic restriction:
+
+```
+Restricted
+Our Software detects that you may be accessing the Betfair website from a
+country that Betfair does not accept bets from or the traffic from your
+network was detected as being unusual. If you believe that this detection
+has occurred in error, please Contact us for further assistance.
+Region: IL
+```
+
+**Read as a real, deliberate access control, not a bug to route around.**
+This is consistent with - and now empirically confirms, for this specific
+provider - the legal context already documented in `CLAUDE.md`: Israel runs
+sports betting as a state monopoly (Winner.co.il / Mifal HaPais), and
+offshore bookmakers/exchanges are not licensed there. Betfair's geo-block
+is the kind of control that exists specifically to enforce that boundary,
+not an incidental network glitch.
+
+**No workaround was attempted or considered, on purpose.** Circumventing a
+regulated betting operator's country restriction (VPN, proxy, or otherwise)
+is a different and clearly worse category of action than reading a public
+stats API, and this project has no legitimate research reason to present
+itself as being in an accepted jurisdiction. The error message's own
+"Contact us if this is a false positive" option was not pursued either -
+this project's actual use case (data research, not placing bets) isn't
+the kind of case that appeal exists for, and pursuing it would misrepresent
+why access is being requested.
+
+**Verdict: REJECT.** Not a data-quality or methodology problem like the
+injury spike's result - this is a jurisdiction/access-level rejection that
+occurred before Stage A's account-registration step could even begin, let
+alone its five stop/go questions. Betfair's Historical Data service is not
+a viable Phase 3 candidate for this project, for as long as this
+jurisdiction restriction holds. Stage B (the paid-tier purchase decision)
+is now moot - there is no Stage A to build on. No budget was spent, no
+account was created, no code was written.

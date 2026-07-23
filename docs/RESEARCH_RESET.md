@@ -127,21 +127,23 @@ recommendation:
    needed. **Verdict: reject-for-backtest, not yet confirmed even for
    Phase 4's paper journal** (that needs its own small forward-looking
    check - does a record populate before its own fixture's kickoff, or
-   only at/near it). Promotes exchange liquidity to the top *open*
-   candidate.
-2. **Exchange liquidity / order-book depth** - **plan written 2026-07-22**,
-   [`docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md),
-   no account or data yet. Betfair's Historical Data service was already
-   scoped once as an alternative timestamped-*price* source in candidate #3's
-   writeup, but it also exposes traded volume/liquidity - a genuinely
-   different signal type than a fixed-odds price series. Real research
-   before writing the plan found a structural wrinkle: the free Basic tier
-   has no volume/depth at all (documented), only the paid Advanced/Pro tiers
-   do - so confirming this candidate's actual hypothesis needs a real
-   purchase decision, deliberately split into its own later stage rather
-   than bundled into the free audit. Not assumed to inherit candidate #3's
-   NO EDGE result just because it shares a provider family.
+   only at/near it). It originally promoted exchange liquidity to the top
+   *open* candidate; that candidate has since also been closed below.
+2. ~~**Exchange liquidity / order-book depth**~~ - **spike blocked before
+   Stage A even started, closed 2026-07-23**:
+   [`docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md)'s
+   "Result" section. The user hit a hard geographic-access restriction
+   attempting to reach `betfair.com` at all (`Region: IL`) - Betfair's
+   Historical Data service requires a real Betfair account, and the account
+   itself isn't reachable from this jurisdiction, consistent with
+   `CLAUDE.md`'s already-documented Israeli sports-betting-monopoly context.
+   **Verdict: REJECT** (access-level, not data-quality) - no workaround was
+   attempted or considered, since circumventing a regulated betting
+   operator's country restriction is out of scope for this project on
+   ethical grounds, independent of the data-quality question this spike
+   never got to ask. Promotes the remaining two candidates below.
 3. **Lower-tier / cup / non-league fixture broadening** (cheap, safe path) -
+   now the top remaining candidate, by elimination rather than by strength:
    not a new signal type, a broader universe where markets may be less
    efficient. Honest framing: this tests a different axis (market efficiency
    by league tier) than genuine external-signal discovery, and should be
@@ -154,6 +156,13 @@ recommendation:
 5. **Press conferences / social signals** - stay deferred, per the original
    evaluation and `docs/PRD.md` §14's explicit gate. Not reconsidered by this
    document.
+
+**Two of the top two candidates are now closed** (injuries: reject-for-
+backtest; exchange liquidity: reject-jurisdiction) - worth pausing to decide
+deliberately whether candidate #3 (lower-tier/cup broadening, an honest
+"different axis" rather than a new signal) is actually worth pursuing next,
+or whether Phase 3's active search should pause here for now, rather than
+mechanically working down the list.
 
 ### What this section does not do
 

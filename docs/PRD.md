@@ -331,14 +331,18 @@ journal**) and real numbers: historical coverage exists, but every injury
 record's only date field is the match's own fixture date, not a publication/
 update timestamp - confirmed against a real response, 2 of a 20-request
 budget. Exchange liquidity/order-book depth (candidate #2 in
-`docs/RESEARCH_RESET.md`) is now the top open candidate - the audit plan is
-[`docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md)
-(plan only, no Betfair account yet). This candidate has a different risk
-shape than the first two: the free tier alone can't confirm real
-liquidity/depth data (that needs a paid tier, a separate purchase decision
-gated on the free-tier audit first), and the account involved is a real
-Betfair betting-exchange account, not a pure stats API - the plan restates
-the no-live-betting boundary explicitly given what kind of account this is.
+`docs/RESEARCH_RESET.md`) was audited next -
+[`docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md)'s
+"Result" section - and is **also closed: REJECT**, but for a different
+reason than injuries. The spike never reached its actual audit questions -
+Betfair's site returned a hard geographic-access restriction (`Region: IL`)
+before an account could even be registered, consistent with `CLAUDE.md`'s
+already-documented Israeli sports-betting-monopoly legal context. No
+workaround was attempted, on ethical grounds. With both top-2 candidates now
+closed, Phase 3's remaining shortlist (lower-tier/cup broadening, lineups/
+fixture-congestion, deferred press-conference/social signals) is in
+`docs/RESEARCH_RESET.md` - worth a deliberate pause before mechanically
+working down the list further.
 
 ### Phase 4: Paper-mode signal journal
 
