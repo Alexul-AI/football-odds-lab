@@ -73,7 +73,14 @@ API-Football) has already been audited and closed -
 - real EPL 2023-24 coverage exists, but every injury record's only date field
 is the match's own fixture date, not a publication/update timestamp, so it's
 rejected for retrospective backtesting (not yet confirmed even for the paper
-journal). See the methodology docs before drawing
+journal). The second candidate (exchange liquidity/order-book depth via
+Betfair) is closed too -
+[`docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md)'s
+"Result" section: **REJECT** on jurisdiction/access grounds - Betfair's site
+returned a hard geographic restriction before an account could even be
+registered, consistent with this project's already-documented Israeli
+sports-betting legal context; no workaround was attempted, on ethical
+grounds. See the methodology docs before drawing
 conclusions from any of these - the honest limitations matter as much as the
 headline numbers.
 

@@ -139,24 +139,21 @@ timing-risk профиль, что уже был помечен для lineups (
 не тупик — источник закрыт для Phase 3 retrospective backtest под этим провайдером,
 exchange liquidity (Betfair) теперь top open candidate в `docs/RESEARCH_RESET.md`.
 
-**Phase 3 Betfair exchange spike — план зафиксирован, аккаунта и данных ещё нет
-(2026-07-22).** [`docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md) —
-источник другого типа риска, чем предыдущие два: не «ещё одна цена», а market
-microstructure (объём, spread, order-book depth). Реальная находка ДО написания плана:
-free (Basic) tier по документации Betfair **вообще не содержит volume/liquidity** —
-только last-traded-price раз в минуту, без полного price ladder; настоящий order-book
-depth (до 3 уровней back/lay) есть только в платных Advanced/Pro tier, цена которых пока
-не подтверждена. План поэтому разбит на **Stage A** (бесплатный аудит: pre-match
-timestamped snapshots, entity matching, ToS, эмпирическая проверка того, что реально
-содержит free tier — в этом PR) и **Stage B** (решение о покупке платного tier для
-проверки liquidity — отдельный будущий гейт, требует явного одобрения и оплаты
-пользователем, не бандлится в этот спайк). **Отдельная граница, специфичная для этого
-источника**: Betfair — реальная букмекерская биржа, а не чистый stats API; аккаунт для
-Historical Data технически имеет доступ и к live betting API. План явно фиксирует:
-используется только read-only Historical Data API, никогда betting/order-placement
-endpoints, ни при каких обстоятельствах — существование аккаунта не создаёт исключения
-из правила «никогда не размещать ставки». Регистрация аккаунта — действие пользователя,
-не моё, вдвойне сильнее обычного правила именно из-за типа аккаунта.
+**Phase 3 Betfair exchange spike — заблокирован до начала Stage A, результат: REJECT
+(jurisdiction access), 2026-07-23.** [`docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md`](docs/PHASE3_BETFAIR_EXCHANGE_SPIKE_PLAN.md)'s
+"Result" секция — пользователь при попытке зайти на betfair.com получил hard geo-restriction
+(`Region: IL`, «may be accessing... from a country that Betfair does not accept bets from»)
+ещё ДО регистрации аккаунта, то есть до самого начала Stage A. Это согласуется с уже
+задокументированным в `CLAUDE.md` юридическим контекстом — Израиль как государственная
+монополия на спортивные ставки, офшорные букмекеры/биржи там не лицензированы. **Никакого
+обхода (VPN/прокси) не рассматривалось и не будет рассматриваться** — обходить
+geo-ограничение регулируемого букмекера ради data research за пределами этого проекта
+этически неприемлемо, независимо от того, насколько интересны были бы сами данные.
+Вердикт: **REJECT** — не проблема качества данных (как у injuries), а access-level отказ.
+Stage B (платный tier) стал неактуален — Stage A даже не начался. Оба топ-2 кандидата
+теперь закрыты; следующий шаг по `docs/RESEARCH_RESET.md` — осознанная пауза перед тем,
+как механически идти дальше по списку (lower-tier/cup broadening как «другая ось», не
+новый сигнал; lineups/fixture-congestion; press-conference/social остаются отложенными).
 
 **Отвечай пользователю на русском языке всегда**, независимо от языка кода, коммитов или
 документации источников данных.
