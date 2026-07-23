@@ -113,6 +113,14 @@ source with real execution capability sitting next to the data:
   tier, full stop. If anything requires a paid tier to even inspect
   (unlikely for Basic-tier file structure, but not yet confirmed), that
   triggers Stage B's separate gate, not silent escalation.
+- **A known terminology trap, named here so it isn't mistaken for scope
+  creep later**: Betfair's own download flow requires adding a file to "My
+  Data" / a "purchase" step in their UI even for Basic-tier files, before
+  the API will serve it - the word "purchase" appears in their own workflow
+  regardless of tier. This is allowed for Stage A **only if the total cost
+  for that step is confirmed to be zero and no paid tier, card, or deposit
+  is involved** - if a real charge shows up anywhere in that flow for a
+  Basic-tier file, that's a Stage B question, not something to click through.
 - **Account registration is the user's own action** - Claude does not
   create the Betfair account, does not log in, and does not handle
   Betfair account credentials as plaintext, same convention already used
