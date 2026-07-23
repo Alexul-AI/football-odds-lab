@@ -220,3 +220,24 @@ reading: opening/closing prices in this market look close to efficient once
 look-ahead is removed, and simple cross-bookmaker timing gaps don't appear to
 survive contact with real statistical testing on this one season. One season,
 one league - informative, not yet a final verdict on the whole approach.
+
+## Robustness check (2026-07-23): Shin's method devig
+
+Same background as `docs/PHASE0B_VALUE_BETTING_METHODOLOGY.md`'s equivalent
+section - an external review correctly flagged the proportional-devig
+favorite-longshot-bias gap (already documented, not a new finding), and its
+own suggested Shin's-method code was found to have a real formula bug on
+verification against the primary source, fixed properly in
+`odds_math.devig_shin` before use here.
+
+`scripts/run_shin_devig_robustness_check.py` re-ran all 32 EV backtest
+segments with `devig_shin` instead of `devig_multiplicative`, side by side,
+same threshold-discipline standard as the original table (every segment
+reported, no post-hoc selection). **Result: no change to the NO EDGE
+verdict.** Point estimates shifted, sometimes substantially and toward more
+positive ROI (e.g. T-1h/williamhill/1%: -11.20% -> +24.36%), but **not one
+of the 32 segments' significance verdict flipped** - every 95% CI still
+crosses zero under Shin's method, same as under proportional. The devig
+method choice was not hiding a real edge in this data. Full 32-row
+comparison table in the robustness-check report (gitignored, local only,
+same convention as every other phase's report).
